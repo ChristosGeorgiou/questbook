@@ -10,17 +10,7 @@
 - user online storage for campaigns, characters etc
 - timers with alerts and turn support (extra time)
 - multilingual support
-- universal schemas with ids: `{game}-{category}-{item}`
-```yml
-id: dnd5-conditions-paralyzed
-title: Paralyzed
-ref: p105
-description:
-  - A paralyzed creature is [incapacitated](dnd5-conditions-incapacitated) and can’t move or speak.
-  - The creature automatically fails [Strength](dnd5-abilities-strength) and [Dexterity](dnd5-abilities-dexterity) saving throws.
-  - Attack rolls against the creature have advantage.
-  - Any attack that hits the creature is a [critical hit](dnd5-attacks-critical) if the attacker is within 5 feet of the creature.
-```
+- universal schemas with ids: `{game}-{category}-{item}` ex.: [Paralyzed](docs/dnd5/conditions/paralyzed.yml)
 
 ## Companion
 - universal reference support (dnd, cthulhu etc)
