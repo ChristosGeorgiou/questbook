@@ -23,7 +23,7 @@ description:
 ```
 
 ## Companion
-- universal reference support (dnd, cthulu etc)
+- universal reference support (dnd, cthulhu etc)
 - reference for races, classes, spells, conditions, items, combat actions, adventure rules, monsters
 
 ## Characters
@@ -64,4 +64,4 @@ description:
 
 ## Marketplace
 - publish campaigns
-- download and play campaigns of others
+- download and play others
