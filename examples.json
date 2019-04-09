@@ -1,0 +1,73 @@
+[
+  {
+    "ts": 1554796392000,
+    "type": "story",
+    "category": "Chapter 01",
+    "campaign": "My Campaign",
+    "displayedAt": 1554796392000,
+    "data": {
+      "label": "Example info text",
+      "text": "lorem ipsum dolor"
+    }
+  },
+  {
+    "ts": 1554796392000,
+    "type": "monster",
+    "category": "Chapter 01",
+    "campaign": "My Campaign",
+    "displayedAt": 1554796392000,
+    "data": {
+      "name": "Dragon",
+      "description": "lorem ipsum dolor",
+      "thumb": "https://picsum.photos/200/200",
+      "portrait": "https://picsum.photos/500/600"
+    }
+  },
+  {
+    "ts": 1554796392000,
+    "type": "character",
+    "category": "Chapter 01",
+    "campaign": "My Campaign",
+    "displayedAt": 1554796392000,
+    "data": {
+      "name": "John Smith",
+      "description": "lorem ipsum dolor",
+      "thumb": "https://picsum.photos/200/200",
+      "portrait": "https://picsum.photos/500/600"
+    }
+  },
+  {
+    "ts": 1554796392000,
+    "type": "item",
+    "category": "Chapter 01",
+    "campaign": "My Campaign",
+    "displayedAt": 1554796392000,
+    "data": {
+      "name": "example item",
+      "description": "lorem ipsum dolor",
+      "thumb": "https://picsum.photos/200/200",
+      "picture": "https://picsum.photos/400/400"
+    }
+  },
+  {
+    "ts": 1554796392000,
+    "type": "map",
+    "category": "Chapter 01",
+    "campaign": "My Campaign",
+    "displayedAt": 1554796392000,
+    "data": {
+      "label": "Example Map 01",
+      "description": "lorem ipsum dolor",
+      "thumb": "https://picsum.photos/200/200",
+      "map": "https://picsum.photos/2000/2000",
+      "mask": "https://picsum.photos/2000/2000",
+      "poi": [
+        {
+          "x": 100,
+          "y": 100,
+          "description": "lorem ipsum dolor"
+        }
+      ]
+    }
+  }
+]
