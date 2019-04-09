@@ -1,63 +1,84 @@
 [
   {
-    "ts": 1554796392000,
-    "type": "story",
-    "category": "Chapter 01",
-    "campaign": "My Campaign",
-    "displayedAt": 1554796392000,
+    "_id": "some-id",
+    "ts": 1554805619000,
+    "type": "campaign",
+    "campaign": null,
     "data": {
+      "title": "My First Campaign",
+      "owner": "You ❤ DM",
+      "description": "hack & slash",
+      "text": "lorem ipsum dolor"
+    }
+  },
+  {
+    "_id": "some-id",
+    "ts": 1554805784000,
+    "type": "story",
+    "campaign": 1554805619000,
+    "data": {
+      "displayedAt": 1554805784000,
+      "category": "Chapter 01",
       "label": "Example info text",
       "text": "lorem ipsum dolor"
     }
   },
   {
-    "ts": 1554796392000,
+    "_id": "some-id",
+    "ts": 1554805784000,
     "type": "monster",
-    "category": "Chapter 01",
-    "campaign": "My Campaign",
-    "displayedAt": 1554796392000,
+    "campaign": 1554805619000,
     "data": {
+      "displayedAt": 1554805784000,
+      "category": "Chapter 01",
       "name": "Dragon",
       "description": "lorem ipsum dolor",
+      "notes": "dm notes here",
       "thumb": "https://picsum.photos/200/200",
       "portrait": "https://picsum.photos/500/600"
     }
   },
   {
-    "ts": 1554796392000,
+    "_id": "some-id",
+    "ts": 1554805784000,
     "type": "character",
-    "category": "Chapter 01",
-    "campaign": "My Campaign",
-    "displayedAt": 1554796392000,
+    "campaign": 1554805619000,
     "data": {
+      "displayedAt": 1554805784000,
+      "category": "Chapter 01",
       "name": "John Smith",
       "description": "lorem ipsum dolor",
+      "notes": "dm notes here",
       "thumb": "https://picsum.photos/200/200",
       "portrait": "https://picsum.photos/500/600"
     }
   },
   {
-    "ts": 1554796392000,
+    "_id": "some-id",
+    "ts": 1554805784000,
     "type": "item",
-    "category": "Chapter 01",
-    "campaign": "My Campaign",
-    "displayedAt": 1554796392000,
+    "campaign": 1554805619000,
     "data": {
+      "displayedAt": 1554805784000,
+      "category": "Chapter 01",
       "name": "example item",
       "description": "lorem ipsum dolor",
+      "notes": "dm notes here",
       "thumb": "https://picsum.photos/200/200",
       "picture": "https://picsum.photos/400/400"
     }
   },
   {
-    "ts": 1554796392000,
+    "_id": "some-id",
+    "ts": 1554805784000,
     "type": "map",
-    "category": "Chapter 01",
-    "campaign": "My Campaign",
-    "displayedAt": 1554796392000,
+    "campaign": 1554805619000,
     "data": {
+      "displayedAt": 1554805784000,
+      "category": "Chapter 01",
       "label": "Example Map 01",
       "description": "lorem ipsum dolor",
+      "notes": "dm notes here",
       "thumb": "https://picsum.photos/200/200",
       "map": "https://picsum.photos/2000/2000",
       "mask": "https://picsum.photos/2000/2000",
@@ -65,7 +86,8 @@
         {
           "x": 100,
           "y": 100,
-          "description": "lorem ipsum dolor"
+          "description": "lorem ipsum dolor",
+          "notes": "dm notes here"
         }
       ]
     }
