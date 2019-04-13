@@ -1,0 +1,23 @@
+{
+  "title": "item",
+  "version": 0,
+  "type": "object",
+  "disableKeyCompression": true,
+  "properties": {
+    "ts": {
+      "type": "number"
+    },
+    "type": {
+      "type": "number"
+    },
+    "data": {
+      "type": "object"
+    },
+    "campaign": {
+      "type": "number"
+    },
+    "show": {
+      "type": "boolean"
+    }
+  }
+}

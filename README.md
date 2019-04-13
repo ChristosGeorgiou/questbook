@@ -49,7 +49,7 @@
   - description
   - characteristics
 - maps
-  - progressive revealing (fog of war)
+  - progressive revealing (fog of war) [dungeon-revealer](https://github.com/apclary/dungeon-revealer)
   - character placement
 
 ## Marketplace

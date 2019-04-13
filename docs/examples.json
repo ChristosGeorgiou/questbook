@@ -2,7 +2,7 @@
   {
     "_id": "some-id",
     "ts": 1554805619000,
-    "type": "campaign",
+    "type": 1,
     "campaign": null,
     "data": {
       "title": "My First Campaign",
@@ -14,7 +14,7 @@
   {
     "_id": "some-id",
     "ts": 1554805784000,
-    "type": "story",
+    "type": 1,
     "campaign": 1554805619000,
     "data": {
       "displayedAt": 1554805784000,
@@ -26,7 +26,7 @@
   {
     "_id": "some-id",
     "ts": 1554805784000,
-    "type": "monster",
+    "type": 1,
     "campaign": 1554805619000,
     "data": {
       "displayedAt": 1554805784000,
@@ -41,7 +41,7 @@
   {
     "_id": "some-id",
     "ts": 1554805784000,
-    "type": "character",
+    "type": 1,
     "campaign": 1554805619000,
     "data": {
       "displayedAt": 1554805784000,
@@ -56,7 +56,7 @@
   {
     "_id": "some-id",
     "ts": 1554805784000,
-    "type": "item",
+    "type": 1,
     "campaign": 1554805619000,
     "data": {
       "displayedAt": 1554805784000,
@@ -71,7 +71,7 @@
   {
     "_id": "some-id",
     "ts": 1554805784000,
-    "type": "map",
+    "type": 1,
     "campaign": 1554805619000,
     "data": {
       "displayedAt": 1554805784000,
