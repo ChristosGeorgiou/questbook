@@ -4,48 +4,56 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>
-      Home {{s}}
+      {{title}}
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <!-- Animated Searchbar -->
-  <ion-searchbar animated placeholder="Filter Schedules"></ion-searchbar>
-  <ng-container *ngFor="let item of items">
-    <ion-card>
-      <div style="text-align: right;padding:1rem;color:#666">{{item.ts | date:"mediumTime"}}</div>
-      <ng-container [ngSwitch]="item.type">
-        <ng-container *ngSwitchCase="docType.story">
-          <div style="padding:0 1rem 1rem;">
-            <div style="font-size:1.2rem; text-align: justify;line-height:1.5;">
-              <markdown [data]="item.data['text']"></markdown>
+
+  <div style="max-width:400px; margin:0 auto">
+    <ion-searchbar animated placeholder="Filter Schedules"></ion-searchbar>
+    <ng-container *ngFor="let item of items">
+      <ion-card (click)="presentActionSheet(item)">
+        <div style="text-align: right;padding:1rem;color:#666">
+          {{item.ts | date:"mediumTime"}}</div>
+        <ng-container [ngSwitch]="item.type">
+          <ng-container *ngSwitchCase="docType.story">
+            <div style="padding:0 1rem 1rem;">
+              <div style="font-size:1.2rem; text-align: justify;line-height:1.5;">
+                <markdown [data]="item.data['text']"></markdown>
+              </div>
+              <div style="color:#666">~ {{item.data["source"]}}</div>
             </div>
-            <div style="color:#666">~ {{item.data["source"]}}</div>
-          </div>
-        </ng-container>
-        <ng-container *ngSwitchCase="docType.monster">
-          <ion-img [src]="item.data['thumb']"></ion-img>
-          <ion-card-header>
-            <ion-card-subtitle>{{item.data["info"]}}</ion-card-subtitle>
-            <ion-card-title>{{item.data["name"]}}</ion-card-title>
-          </ion-card-header>
-          <ion-card-content>
-            <markdown [data]="item.data['description']"></markdown>
-          </ion-card-content>
-        </ng-container>
-        <ng-container *ngSwitchCase="docType.character">
-          <ion-img [src]="item.data['thumb']"></ion-img>
-          <ion-card-header>
+          </ng-container>
+          <ng-container *ngSwitchCase="docType.monster">
+            <ion-img [src]="item.data['thumb']"></ion-img>
+            <ion-card-header>
               <ion-card-subtitle>{{item.data["info"]}}</ion-card-subtitle>
-            <ion-card-title>{{item.data["name"]}}</ion-card-title>
-          </ion-card-header>
-          <ion-card-content>
-            <markdown [data]="item.data['description']"></markdown>
-          </ion-card-content>
+              <ion-card-title>{{item.data["name"]}}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <markdown [data]="item.data['description']"></markdown>
+            </ion-card-content>
+          </ng-container>
+          <ng-container *ngSwitchCase="docType.character">
+            <ion-img [src]="item.data['thumb']"></ion-img>
+            <ion-card-header>
+              <ion-card-subtitle>{{item.data["info"]}}</ion-card-subtitle>
+              <ion-card-title>{{item.data["name"]}}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <markdown [data]="item.data['description']"></markdown>
+            </ion-card-content>
+          </ng-container>
         </ng-container>
-      </ng-container>
-      <!-- <pre>{{item|json}}</pre> -->
-    </ion-card>
-  </ng-container>
+        <!-- <pre>{{item|json}}</pre> -->
+      </ion-card>
+    </ng-container>
+  </div>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="newItem()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

@@ -13,18 +13,31 @@ export class AppComponent {
 
   isMaster = false;
 
-  public appPages = [
-    {
-      title: 'Home',
-      url: '/home',
-      icon: 'home'
-    },
-    {
-      title: 'List',
-      url: '/list',
-      icon: 'list'
-    }
-  ];
+  public appPages = [{
+    title: 'Stories',
+    url: '/home/story',
+    icon: 'paper'
+  }, {
+    title: 'Characters',
+    url: '/home/character',
+    icon: 'contacts'
+  }, {
+    title: 'Monsters',
+    url: '/home/monster',
+    icon: 'trophy'
+  }, {
+    title: 'Items',
+    url: '/home/item',
+    icon: 'rose'
+  }, {
+    title: 'Maps',
+    url: '/home/map',
+    icon: 'map'
+  }, {
+    title: 'List',
+    url: '/list',
+    icon: 'list'
+  }];
 
   constructor(
     private platform: Platform,

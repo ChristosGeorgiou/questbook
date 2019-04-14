@@ -32,12 +32,8 @@
               }
             ],
             "styles": [
-              {
-                "input": "src/theme/variables.scss"
-              },
-              {
-                "input": "src/global.scss"
-              }
+              "src/theme/variables.scss",
+              "src/global.scss"
             ],
             "scripts": [
               "node_modules/marked/lib/marked.js"

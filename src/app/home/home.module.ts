@@ -6,22 +6,27 @@ import { IonicModule } from '@ionic/angular';
 import { MarkdownModule } from 'ngx-markdown';
 import { DatabaseService } from '../services/database.service';
 import { HomePage } from './home.page';
-
+import { ItemComponent } from './item/item.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    // LMarkdownEditorModule,
     MarkdownModule.forChild(),
     RouterModule.forChild([
       {
-        path: '',
+        path: ':t',
         component: HomePage
       }
     ])
   ],
-  declarations: [HomePage],
+  declarations: [
+    HomePage,
+    ItemComponent,
+  ],
+  entryComponents: [ItemComponent],
   providers: [
     DatabaseService
   ]
