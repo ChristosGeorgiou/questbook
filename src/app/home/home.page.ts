@@ -40,7 +40,7 @@ export class HomePage implements OnInit {
       console.log(this.type);
       this.title = this.typeTitles[this.type];
       this.db.get().then(db => {
-        db['tabletop'].$.subscribe(async (s) => {
+        db[this.state.campaign].$.subscribe(async (s) => {
           this.getData(db);
         });
         this.state.isMaster.subscribe((s) => {
@@ -48,13 +48,13 @@ export class HomePage implements OnInit {
           this.getData(db);
         });
         this.getData(db);
-        this.newItem()
+        // this.newItem();
       });
     });
   }
 
   async getData(db) {
-    const items: Doc[] = await db['tabletop'].find().where('type').eq(DocType[this.type]).exec();
+    const items: Doc[] = await db[this.state.campaign].find().where('type').eq(DocType[this.type]).exec();
     console.log('items', items);
     this.items = items
       .filter(x => x.show || this.state.isMaster.value)

@@ -14,7 +14,7 @@
       "type": "object"
     },
     "campaign": {
-      "type": "number"
+      "type": "string"
     },
     "show": {
       "type": "boolean"

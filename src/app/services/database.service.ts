@@ -15,9 +15,11 @@ RxDB.plugin(EncryptionPlugin);
 RxDB.plugin(AdapterIDB);
 RxDB.plugin(AdapterHttp);
 
+const campaign = 'campaign01';
+
 const collections = [
   {
-    name: 'tabletop',
+    name: campaign,
     schema: schema,
     sync: true
   }
@@ -35,7 +37,7 @@ export class DatabaseService {
 
   private async _create(): Promise<RxDatabase> {
     console.log('DatabaseService: creating database..');
-    const db = await RxDB.create({ name: 'tabletop', adapter: 'idb' });
+    const db = await RxDB.create({ name: campaign, adapter: 'idb' });
     console.log('DatabaseService: created database');
     window['db'] = db; // write to window for debugging
 

@@ -1,9 +1,8 @@
-[
-  {
-    "_id": "some-id",
+[{
     "ts": 1554805619000,
-    "type": 1,
-    "campaign": null,
+    "type": 0,
+    "campaign": "campaign01",
+    "show": true,
     "data": {
       "title": "My First Campaign",
       "owner": "You ❤ DM",
@@ -12,25 +11,20 @@
     }
   },
   {
-    "_id": "some-id",
     "ts": 1554805784000,
     "type": 1,
-    "campaign": 1554805619000,
+    "campaign": "campaign01",
+    "show": true,
     "data": {
-      "displayedAt": 1554805784000,
-      "category": "Chapter 01",
       "label": "Example info text",
       "text": "lorem ipsum dolor"
     }
   },
   {
-    "_id": "some-id",
-    "ts": 1554805784000,
+    "ts": 1554805794000,
     "type": 1,
-    "campaign": 1554805619000,
+    "campaign": "campaign01",
     "data": {
-      "displayedAt": 1554805784000,
-      "category": "Chapter 01",
       "name": "Dragon",
       "description": "lorem ipsum dolor",
       "notes": "dm notes here",
@@ -39,13 +33,10 @@
     }
   },
   {
-    "_id": "some-id",
-    "ts": 1554805784000,
+    "ts": 1554805894000,
     "type": 1,
-    "campaign": 1554805619000,
+    "campaign": "campaign01",
     "data": {
-      "displayedAt": 1554805784000,
-      "category": "Chapter 01",
       "name": "John Smith",
       "description": "lorem ipsum dolor",
       "notes": "dm notes here",
@@ -54,13 +45,10 @@
     }
   },
   {
-    "_id": "some-id",
     "ts": 1554805784000,
     "type": 1,
-    "campaign": 1554805619000,
+    "campaign": "campaign01",
     "data": {
-      "displayedAt": 1554805784000,
-      "category": "Chapter 01",
       "name": "example item",
       "description": "lorem ipsum dolor",
       "notes": "dm notes here",
@@ -69,27 +57,22 @@
     }
   },
   {
-    "_id": "some-id",
     "ts": 1554805784000,
     "type": 1,
-    "campaign": 1554805619000,
+    "campaign": "campaign01",
     "data": {
-      "displayedAt": 1554805784000,
-      "category": "Chapter 01",
       "label": "Example Map 01",
       "description": "lorem ipsum dolor",
       "notes": "dm notes here",
       "thumb": "https://picsum.photos/200/200",
       "map": "https://picsum.photos/2000/2000",
       "mask": "https://picsum.photos/2000/2000",
-      "poi": [
-        {
-          "x": 100,
-          "y": 100,
-          "description": "lorem ipsum dolor",
-          "notes": "dm notes here"
-        }
-      ]
+      "poi": [{
+        "x": 100,
+        "y": 100,
+        "description": "lorem ipsum dolor",
+        "notes": "dm notes here"
+      }]
     }
   }
 ]
