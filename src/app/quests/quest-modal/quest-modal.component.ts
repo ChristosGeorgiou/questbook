@@ -7,19 +7,33 @@ import { Quest } from '../models/quest';
 })
 export class QuestModalComponent implements OnInit {
 
-  @Input() quests: Quest[];
+  @Input() quest: Quest;
 
   constructor() { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    if (!this.quest) {
+      this.quest = {
+        visible: null,
+        items: [{
+          visible: null
+        }]
+      };
+    }
+  }
 
-  addItem(quest) {
-    quest.items.push({
+  addItem() {
+    this.quest.items.push({
       visible: null
     });
   }
 
-  save(quest) {
+  removeItem(item) {
+    const i = this.quest.items.findIndex(item);
+    this.quest.items.splice(i, 1);
+  }
+
+  save() {
 
   }
 }

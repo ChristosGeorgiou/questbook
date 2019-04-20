@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Quest } from 'src/app/services/models.all';
 import { StateService } from 'src/app/services/state.service';
-import { Quest } from '../models/quest';
 
 @Component({
   selector: 'app-quest-card',
@@ -9,6 +9,7 @@ import { Quest } from '../models/quest';
 export class QuestCardComponent implements OnInit {
 
   @Input() quest: Quest;
+  @Output() update = new EventEmitter<Quest>();
 
   constructor(
     private state: StateService
@@ -25,7 +26,7 @@ export class QuestCardComponent implements OnInit {
     return this.quest.items.find(i => i.visible !== null) !== null;
   }
 
-  showItem(item) {
+  async showItem(item) {
     if (!this.quest.visible) {
       this.quest.visible = Date.now();
     }
@@ -34,9 +35,12 @@ export class QuestCardComponent implements OnInit {
     this.quest.items.sort((a, b) => {
       return b.visible - a.visible;
     });
+
+    this.update.emit(this.quest);
   }
 
-  hideItem(item) {
+  async hideItem(item) {
     item.visible = null;
+    this.update.emit(this.quest);
   }
 }

@@ -13,6 +13,7 @@ import { NewBadgeComponent } from './new-badge/new-badge.component';
 import { QuestCardComponent } from './quests/quest-card/quest-card.component';
 import { QuestModalComponent } from './quests/quest-modal/quest-modal.component';
 import { QuestsComponent } from './quests/quests.component';
+import { DatabaseService } from './services/database.service';
 import { StateService } from './services/state.service';
 import { StoryComponent } from './story/story.component';
 
@@ -49,6 +50,7 @@ import { StoryComponent } from './story/story.component';
     StatusBar,
     SplashScreen,
     StateService,
+    DatabaseService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

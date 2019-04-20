@@ -1,6 +1,6 @@
 export enum DocType {
   campaign,
-  story,
+  quest,
   monster,
   character,
   item,
@@ -18,9 +18,14 @@ export interface Campaign extends Data {
   text: string;
 }
 
-export interface Story extends Data {
-  label: string;
-  text: string;
+export interface Quest extends Data {
+  subject?: string;
+  description?: string;
+  visible: number;
+  items: {
+      content?: string,
+      visible: number
+  }[];
 }
 
 export interface Monster extends Data {
@@ -66,7 +71,7 @@ export interface Map extends Data {
 
 export type DocData =
   Campaign |
-  Story |
+  Quest |
   Monster |
   Character |
   Item |
@@ -75,8 +80,6 @@ export type DocData =
 export interface Doc {
   _id: string;
   ts: number;
-  show: boolean;
   type: DocType;
-  campaign: string;
   data: DocData;
 }

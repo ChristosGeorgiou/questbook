@@ -1,8 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActionSheetController, ModalController } from '@ionic/angular';
+import { RxCollection, RxDocument } from 'rxdb';
+import { DatabaseService } from '../services/database.service';
+import { Doc, DocType, Quest } from '../services/models.all';
 import { StateService } from '../services/state.service';
-import { Quest } from './models/quest';
 import { QuestModalComponent } from './quest-modal/quest-modal.component';
+
+interface Referable {
+  ref?: string;
+}
 
 @Component({
   selector: 'app-quests',
@@ -10,7 +16,9 @@ import { QuestModalComponent } from './quest-modal/quest-modal.component';
 })
 export class QuestsComponent implements OnInit {
 
-  quests: Quest[] = [{
+  quests$: RxCollection<Doc>;
+
+  quests: (Quest & Referable)[] = [{
     subject: 'Find the secret city',
     description: 'Where is the secret sity',
     visible: 1555753513000,
@@ -40,25 +48,36 @@ export class QuestsComponent implements OnInit {
   constructor(
     private state: StateService,
     private actionSheetController: ActionSheetController,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private db: DatabaseService,
   ) { }
 
   get isMaster() {
     return this.state.isMaster;
   }
 
-  ngOnInit() { }
+  async ngOnInit() {
+    this.quests$ = await this.db.get(this.state.campaign);
+    await this.getData();
+  }
+
+  async getData() {
+    console.log('load data');
+    const items: Doc[] = await this.quests$.find()
+      .where('type').eq(DocType.quest).exec();
+    this.quests = items.map(i => {
+      const q = i.data as Quest & Referable;
+      q.ref = i._id;
+      return q;
+    });
+  }
 
   async newQuest() {
-      const modal = await this.modalController.create({
-        component: QuestModalComponent,
-        // componentProps: {
-        //   'prop1': value,
-        //   'prop2': value2
-        // }
-      });
-      return await modal.present();
-    }
+    const modal = await this.modalController.create({
+      component: QuestModalComponent,
+    });
+    return await modal.present();
+  }
 
   async presentActionSheet(quest: Quest) {
     if (!this.isMaster) { return; }
@@ -70,7 +89,7 @@ export class QuestsComponent implements OnInit {
       }, {
         text: 'Delete', icon: 'trash', handler: () => { console.log('Delete clicked'); }
       }, {
-        text: 'Edit', icon: 'share', handler: () => { console.log('Share clicked'); }
+        text: 'Edit', icon: 'share', handler: () => { this.editQuest(quest); }
       }, {
         text: 'Cancel', icon: 'close', role: 'cancel', handler: () => { console.log('Cancel clicked'); }
       }]
@@ -78,15 +97,35 @@ export class QuestsComponent implements OnInit {
     await actionSheet.present();
   }
 
-  showQuest(quest) {
+  async showQuest(quest) {
     quest.visible = Date.now();
     this.quests.sort((a, b) => {
       return b.visible - a.visible;
     });
+    await this.updateQuest(quest);
   }
 
-  hideQuest(quest) {
+  async hideQuest(quest) {
     quest.visible = null;
+    await this.updateQuest(quest);
   }
 
+  async editQuest(quest) {
+    const modal = await this.modalController.create({
+      component: QuestModalComponent,
+      componentProps: {
+        quest: { ...quest }
+      }
+    });
+    return await modal.present();
+  }
+
+  async updateQuest(quest: Quest & Referable) {
+    const q: RxDocument<Doc> = await this.quests$.findOne(quest.ref).exec();
+    await q.update({
+      $set: {
+        data: quest
+      }
+    });
+  }
 }

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Story } from '../services/models.all';
+import { Quest } from '../services/models.all';
 
 @Component({
   selector: 'app-story',
@@ -8,7 +8,7 @@ import { Story } from '../services/models.all';
 })
 export class StoryComponent implements OnInit {
 
-  @Input() story: Story;
+  @Input() story: Quest;
 
   constructor() { }
 
