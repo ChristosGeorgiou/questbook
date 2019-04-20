@@ -21,14 +21,11 @@ const syncURL = 'http://localhost:5984/';
 
 @Injectable()
 export class DatabaseService {
-  static dbPromise: Promise<RxCollection> = null;
+  static db$: {[key: string]: Promise<RxCollection>} = {};
 
   private async _create(campaign: string): Promise<RxCollection> {
     console.log('DatabaseService: creating database..');
     const db = await RxDB.create({ name: campaign, adapter: 'idb' });
-
-    console.log('DatabaseService: created database');
-    window['db'] = db; // write to window for debugging
 
     console.log('DatabaseService: create collections');
     await db.collection({
@@ -44,12 +41,12 @@ export class DatabaseService {
   }
 
   get(campaign: string): Promise<RxCollection> {
-    if (DatabaseService.dbPromise) {
-      return DatabaseService.dbPromise;
+    if (DatabaseService.db$[campaign]) {
+      return DatabaseService.db$[campaign];
     }
 
     // create database
-    DatabaseService.dbPromise = this._create(campaign);
-    return DatabaseService.dbPromise;
+    DatabaseService.db$[campaign] = this._create(campaign);
+    return DatabaseService.db$[campaign];
   }
 }

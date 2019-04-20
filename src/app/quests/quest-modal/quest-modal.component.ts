@@ -1,26 +1,22 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Quest } from '../models/quest';
+import { Component, Input } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+import { DatabaseService } from 'src/app/services/database.service';
+import { Quest } from 'src/app/services/models.all';
+import { StateService } from 'src/app/services/state.service';
 
 @Component({
   selector: 'app-quest-modal',
   templateUrl: './quest-modal.component.html',
 })
-export class QuestModalComponent implements OnInit {
+export class QuestModalComponent {
 
   @Input() quest: Quest;
 
-  constructor() { }
-
-  ngOnInit() {
-    if (!this.quest) {
-      this.quest = {
-        visible: null,
-        items: [{
-          visible: null
-        }]
-      };
-    }
-  }
+  constructor(
+    private state: StateService,
+    private db: DatabaseService,
+    private modalCtrl: ModalController,
+    ) { }
 
   addItem() {
     this.quest.items.push({
@@ -33,7 +29,7 @@ export class QuestModalComponent implements OnInit {
     this.quest.items.splice(i, 1);
   }
 
-  save() {
-
+  async save() {
+    this.modalCtrl.dismiss(this.quest);
   }
 }

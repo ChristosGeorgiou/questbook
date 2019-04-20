@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Quest } from 'src/app/services/models.all';
 import { StateService } from 'src/app/services/state.service';
 
@@ -6,7 +6,7 @@ import { StateService } from 'src/app/services/state.service';
   selector: 'app-quest-card',
   templateUrl: './quest-card.component.html',
 })
-export class QuestCardComponent implements OnInit {
+export class QuestCardComponent {
 
   @Input() quest: Quest;
   @Output() update = new EventEmitter<Quest>();
@@ -19,11 +19,8 @@ export class QuestCardComponent implements OnInit {
     return this.state.isMaster;
   }
 
-  ngOnInit() {
-  }
-
-  hasItems() {
-    return this.quest.items.find(i => i.visible !== null) !== null;
+  get hasItems() {
+    return this.quest.items.findIndex(i => i.visible !== null) !== -1;
   }
 
   async showItem(item) {
@@ -32,9 +29,9 @@ export class QuestCardComponent implements OnInit {
     }
 
     item.visible = Date.now();
-    this.quest.items.sort((a, b) => {
-      return b.visible - a.visible;
-    });
+    // this.quest.items.sort((a, b) => {
+    //   return b.visible - a.visible;
+    // });
 
     this.update.emit(this.quest);
   }

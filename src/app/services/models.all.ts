@@ -78,7 +78,7 @@ export type DocData =
   Map;
 
 export interface Doc {
-  _id: string;
+  _id?: string;
   ts: number;
   type: DocType;
   data: DocData;

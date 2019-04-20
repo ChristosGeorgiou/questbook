@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { ActionSheetController, ModalController } from '@ionic/angular';
 import { RxCollection, RxDocument } from 'rxdb';
 import { DatabaseService } from '../services/database.service';
@@ -47,9 +47,10 @@ export class QuestsComponent implements OnInit {
 
   constructor(
     private state: StateService,
-    private actionSheetController: ActionSheetController,
-    private modalController: ModalController,
+    private actionSheetCtrl: ActionSheetController,
+    private modalCtrl: ModalController,
     private db: DatabaseService,
+    private zone: NgZone
   ) { }
 
   get isMaster() {
@@ -58,30 +59,60 @@ export class QuestsComponent implements OnInit {
 
   async ngOnInit() {
     this.quests$ = await this.db.get(this.state.campaign);
-    await this.getData();
+    this.quests$.$.subscribe((ev) => {
+      this.getData();
+    });
+    this.getData();
   }
 
   async getData() {
     console.log('load data');
     const items: Doc[] = await this.quests$.find()
       .where('type').eq(DocType.quest).exec();
-    this.quests = items.map(i => {
-      const q = i.data as Quest & Referable;
-      q.ref = i._id;
-      return q;
+    this.zone.run(() => {
+      this.quests = items.map(i => {
+        const q = i.data as Quest & Referable;
+        q.ref = i._id;
+        return q;
+      });
     });
   }
 
-  async newQuest() {
-    const modal = await this.modalController.create({
+  async questForm(quest: Quest) {
+
+    const q = quest || {
+      visible: null,
+      items: [{
+        visible: null
+      }]
+    };
+
+    const modal = await this.modalCtrl.create({
       component: QuestModalComponent,
+      componentProps: {
+        quest: { ...q }
+      }
     });
-    return await modal.present();
+
+    modal.onDidDismiss().then((res) => {
+      const newq: Quest & Referable = res.data;
+      if (newq.ref) {
+        this.updateQuest(newq);
+      } else {
+        this.quests$.insert({
+          ts: Date.now(),
+          type: DocType.quest,
+          data: newq
+        });
+      }
+    });
+
+    await modal.present();
   }
 
   async presentActionSheet(quest: Quest) {
     if (!this.isMaster) { return; }
-    const actionSheet = await this.actionSheetController.create({
+    const actionSheet = await this.actionSheetCtrl.create({
       buttons: [{
         text: 'Show', icon: 'eye', handler: () => { this.showQuest(quest); }
       }, {
@@ -89,7 +120,7 @@ export class QuestsComponent implements OnInit {
       }, {
         text: 'Delete', icon: 'trash', handler: () => { console.log('Delete clicked'); }
       }, {
-        text: 'Edit', icon: 'share', handler: () => { this.editQuest(quest); }
+        text: 'Edit', icon: 'share', handler: () => { this.questForm(quest); }
       }, {
         text: 'Cancel', icon: 'close', role: 'cancel', handler: () => { console.log('Cancel clicked'); }
       }]
@@ -108,16 +139,6 @@ export class QuestsComponent implements OnInit {
   async hideQuest(quest) {
     quest.visible = null;
     await this.updateQuest(quest);
-  }
-
-  async editQuest(quest) {
-    const modal = await this.modalController.create({
-      component: QuestModalComponent,
-      componentProps: {
-        quest: { ...quest }
-      }
-    });
-    return await modal.present();
   }
 
   async updateQuest(quest: Quest & Referable) {
