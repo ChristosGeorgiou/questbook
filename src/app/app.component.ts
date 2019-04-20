@@ -2,8 +2,7 @@ import { Component } from '@angular/core';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Platform } from '@ionic/angular';
-import { StateService } from './StateService';
-
+import { StateService } from './services/state.service';
 
 @Component({
   selector: 'app-root',
@@ -11,11 +10,9 @@ import { StateService } from './StateService';
 })
 export class AppComponent {
 
-  isMaster = false;
-
   public appPages = [{
-    title: 'Stories',
-    url: '/home/story',
+    title: 'Quests',
+    url: '/quests',
     icon: 'paper'
   }, {
     title: 'Characters',
@@ -48,18 +45,18 @@ export class AppComponent {
     this.initializeApp();
   }
 
+  get isMaster() {
+    return this.state.isMaster;
+  }
+
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
-
-      this.isMaster = this.state.isMaster.value;
-
       this.splashScreen.hide();
     });
   }
 
   switchMaster() {
-    this.isMaster = !this.isMaster;
-    this.state.isMaster.next(this.isMaster);
+    this.state.isMaster = !this.state.isMaster;
   }
 }

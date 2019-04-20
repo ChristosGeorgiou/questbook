@@ -1,0 +1,47 @@
+<ng-container *ngFor="let quest of quests">
+  <ion-card>
+    <ion-item>
+      <ion-button *ngIf="!quest.visible" slot="start" color="primary" fill="outline" size="small"
+        (click)="showQuest(quest)">
+        Show</ion-button>
+      <ion-button *ngIf="quest.visible" slot="start" color="danger" fill="outline" size="small"
+        (click)="hideQuest(quest)">
+        Hide</ion-button>
+      <ion-button slot="end" color="success" fill="outline" size="small" (click)="save(quest)">
+        Save</ion-button>
+    </ion-item>
+    <ion-item>
+        <ion-label position="floating">Floating Input</ion-label>
+      <ion-input [(ngModel)]="quest.subject" placeholder="subject"></ion-input>
+    </ion-item>
+    <ion-card-header>
+      <ion-card-title>
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-textarea [(ngModel)]="quest.description" placeholder="subject"></ion-textarea>
+    </ion-card-content>
+    <ion-list>
+      <ion-list-header>
+        <ion-label>Keypoints
+        </ion-label>
+      </ion-list-header>
+      <ng-container *ngFor="let item of quest.items">
+        <ion-item>
+          <ion-textarea [(ngModel)]="item.content" placeholder="keypoint"></ion-textarea>
+          <ion-button *ngIf="!item.visible" color="primary" fill="outline" size="small" slot="end"
+            (click)="showItem(item)">
+            Show</ion-button>
+          <ion-button *ngIf="item.visible" color="danger" fill="outline" size="small" slot="end"
+            (click)="hideItem(item)">
+            Hide
+          </ion-button>
+        </ion-item>
+      </ng-container>
+      <ion-item>
+          <ion-button color="success" fill="outline" size="small" (click)="addItem(quest)">
+            + Add</ion-button>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+</ng-container>

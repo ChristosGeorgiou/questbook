@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Quests</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div style="max-width:500px; margin:0 auto">
+    <ng-container *ngFor="let quest of quests">
+      <ng-container *ngIf="quest.visible || isMaster">
+        <app-quest-card [quest]="quest" (click)="presentActionSheet(quest)"></app-quest-card>
+      </ng-container>
+    </ng-container>
+  </div>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="isMaster">
+    <ion-fab-button (click)="newQuest()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

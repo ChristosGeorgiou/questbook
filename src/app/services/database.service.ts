@@ -26,7 +26,7 @@ const collections = [
 ];
 
 console.log('hostname: ' + window.location.hostname);
-const syncURL = 'http://127.0.0.1:5984/';
+const syncURL = 'http://192.168.1.31:5984/';
 
 let doSync = true;
 if (window.location.hash === '#nosync') { doSync = false; }
