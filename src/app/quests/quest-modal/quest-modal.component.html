@@ -20,11 +20,11 @@
       <ion-button color="success" fill="outline" size="small" slot="end" (click)="addItem()">
         + Add</ion-button>
     </ion-item>
-    <ng-container *ngFor="let item of quest.items">
+    <ng-container *ngFor="let item of quest.items; let i = index">
       <ion-item>
         <ion-input [(ngModel)]="item.content" placeholder="keypoint"></ion-input>
         <ion-button color="danger" fill="outline" size="small" slot="end"
-          (click)="removeItem(item)">
+          (click)="removeItem(i)">
           <ion-icon name="trash"></ion-icon>
         </ion-button>
       </ion-item>

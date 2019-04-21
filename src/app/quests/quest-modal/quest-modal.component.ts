@@ -24,9 +24,8 @@ export class QuestModalComponent {
     });
   }
 
-  removeItem(item) {
-    const i = this.quest.items.findIndex(item);
-    this.quest.items.splice(i, 1);
+  removeItem(index) {
+    this.quest.items.splice(index, 1);
   }
 
   async save() {

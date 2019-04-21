@@ -1,5 +1,5 @@
 import { Component, NgZone, OnInit } from '@angular/core';
-import { ActionSheetController, ModalController } from '@ionic/angular';
+import { ActionSheetController, AlertController, ModalController } from '@ionic/angular';
 import { RxCollection, RxDocument } from 'rxdb';
 import { DatabaseService } from '../services/database.service';
 import { Doc, DocType, Quest } from '../services/models.all';
@@ -16,41 +16,16 @@ interface Referable {
 })
 export class QuestsComponent implements OnInit {
 
-  quests$: RxCollection<Doc>;
-
-  quests: (Quest & Referable)[] = [{
-    subject: 'Find the secret city',
-    description: 'Where is the secret sity',
-    visible: 1555753513000,
-    items: [{
-      content: 'The city is under the sun',
-      visible: 1555753513000,
-    }, {
-      content: 'The one that has no name knows how to find it',
-      visible: null,
-    }, {
-      content: 'The blue dragon has destroy the city before',
-      visible: 1555753513000,
-    }]
-  }, {
-    subject: 'Find who stole the amber staff',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse hendrerit purus id nulla dignissim vulputate. Cras mattis et justo quis placerat. Fusce ut elementum augue. Donec convallis nisl non efficitur consequat. Morbi pulvinar mi vel orci maximus rutrum. Cras dapibus augue eu tellus pulvinar, dapibus fringilla metus eleifend. In in laoreet est. Mauris vel sodales nunc.',
-    visible: 1555749333000,
-    items: [{
-      content: 'Lorem is the brother of ipsum',
-      visible: 1555749373000,
-    }, {
-      content: 'Ispum is missing',
-      visible: 1555749552000,
-    }]
-  }];
+  questsCollection: RxCollection<Doc>;
+  quests: (Quest & Referable)[];
 
   constructor(
     private state: StateService,
     private actionSheetCtrl: ActionSheetController,
     private modalCtrl: ModalController,
     private db: DatabaseService,
-    private zone: NgZone
+    private zone: NgZone,
+    private alertCtrl: AlertController,
   ) { }
 
   get isMaster() {
@@ -58,8 +33,8 @@ export class QuestsComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.quests$ = await this.db.get(this.state.campaign);
-    this.quests$.$.subscribe((ev) => {
+    this.questsCollection = await this.db.get(this.state.campaign);
+    this.questsCollection.$.subscribe((ev) => {
       this.getData();
     });
     this.getData();
@@ -67,7 +42,7 @@ export class QuestsComponent implements OnInit {
 
   async getData() {
     console.log('load data');
-    const items: Doc[] = await this.quests$.find()
+    const items: Doc[] = await this.questsCollection.find()
       .where('type').eq(DocType.quest).exec();
     this.zone.run(() => {
       this.quests = items.map(i => {
@@ -99,7 +74,7 @@ export class QuestsComponent implements OnInit {
       if (newq.ref) {
         this.updateQuest(newq);
       } else {
-        this.quests$.insert({
+        this.questsCollection.insert({
           ts: Date.now(),
           type: DocType.quest,
           data: newq
@@ -118,11 +93,11 @@ export class QuestsComponent implements OnInit {
       }, {
         text: 'Hide', icon: 'eye-off', handler: () => { this.hideQuest(quest); }
       }, {
-        text: 'Delete', icon: 'trash', handler: () => { console.log('Delete clicked'); }
+        text: 'Remove', icon: 'trash', handler: () => { this.removeQuest(quest); }
       }, {
         text: 'Edit', icon: 'share', handler: () => { this.questForm(quest); }
       }, {
-        text: 'Cancel', icon: 'close', role: 'cancel', handler: () => { console.log('Cancel clicked'); }
+        text: 'Cancel', icon: 'close', role: 'cancel', handler: () => { }
       }]
     });
     await actionSheet.present();
@@ -142,11 +117,35 @@ export class QuestsComponent implements OnInit {
   }
 
   async updateQuest(quest: Quest & Referable) {
-    const q: RxDocument<Doc> = await this.quests$.findOne(quest.ref).exec();
+    const q: RxDocument<Doc> = await this.questsCollection.findOne(quest.ref).exec();
     await q.update({
       $set: {
         data: quest
       }
     });
+  }
+
+  async removeQuest(quest) {
+    const alert = await this.alertCtrl.create({
+      header: 'Confirm Remove',
+      subHeader: 'This quest will be removed from all players. This action is not reversible.',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Remove',
+          handler: async () => {
+            const q: RxDocument<Doc> = await this.questsCollection.findOne(quest.ref).exec();
+            await q.remove();
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 }
