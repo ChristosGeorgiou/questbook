@@ -8,25 +8,30 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { MarkdownModule } from 'ngx-markdown';
 import { WebStorageModule } from 'ngx-store';
 import { AppComponent } from './app.component';
-import { ClickStopPropagation } from './directives/click-stop-propagation.directive';
-import { NewBadgeComponent } from './new-badge/new-badge.component';
+import { CampaignComponent } from './campaign/campaign.component';
+import { HomeComponent } from './home/home.component';
 import { QuestCardComponent } from './quests/quest-card/quest-card.component';
 import { QuestModalComponent } from './quests/quest-modal/quest-modal.component';
 import { QuestsComponent } from './quests/quests.component';
-import { DatabaseService } from './services/database.service';
-import { StateService } from './services/state.service';
-import { StoryComponent } from './story/story.component';
+import { SearchComponent } from './search/search.component';
+import { ClickStopPropagation } from './_shared/directives/click-stop-propagation.directive';
+import { NewBadgeComponent } from './_shared/new-badge/new-badge.component';
+import { HighlightPipe } from './_shared/pipes/highlight.pipe';
+import { DatabaseService } from './_shared/services/database.service';
+import { StateService } from './_shared/services/state.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     NewBadgeComponent,
-    StoryComponent,
     QuestsComponent,
     QuestModalComponent,
     QuestCardComponent,
-
+    SearchComponent,
     ClickStopPropagation,
+    CampaignComponent,
+    HomeComponent,
+    HighlightPipe,
   ],
   entryComponents: [
     QuestModalComponent,
@@ -42,8 +47,22 @@ import { StoryComponent } from './story/story.component';
       redirectTo: 'home',
       pathMatch: 'full'
     }, {
-      path: 'quests',
-      component: QuestsComponent
+      path: 'home',
+      component: HomeComponent
+    }, {
+      path: 'search',
+      component: SearchComponent
+    }, {
+      path: 'campaign',
+      component: CampaignComponent,
+      children: [{
+        path: '',
+        redirectTo: 'quests',
+        pathMatch: 'full'
+      }, {
+        path: 'quests',
+        component: QuestsComponent
+      }]
     }])
   ],
   providers: [

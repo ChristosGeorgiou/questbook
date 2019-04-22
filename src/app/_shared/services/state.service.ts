@@ -4,10 +4,8 @@ import { LocalStorage } from 'ngx-store';
 @Injectable()
 export class StateService {
 
-  campaign = 'first';
-
+  @LocalStorage() campaign;
   @LocalStorage() isMaster = false;
 
-  constructor() {
-  }
+  constructor() {}
 }

@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { DatabaseService } from 'src/app/services/database.service';
-import { Quest } from 'src/app/services/models.all';
-import { StateService } from 'src/app/services/state.service';
+import { DatabaseService } from '../../_shared/services/database.service';
+import { Quest } from '../../_shared/services/models.all';
+import { StateService } from '../../_shared/services/state.service';
 
 @Component({
   selector: 'app-quest-modal',

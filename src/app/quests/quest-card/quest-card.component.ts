@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Quest } from 'src/app/services/models.all';
-import { StateService } from 'src/app/services/state.service';
+import { Quest } from '../../_shared/services/models.all';
+import { StateService } from '../../_shared/services/state.service';
 
 @Component({
   selector: 'app-quest-card',

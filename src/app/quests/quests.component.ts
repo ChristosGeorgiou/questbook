@@ -1,9 +1,9 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { ActionSheetController, AlertController, ModalController } from '@ionic/angular';
 import { RxCollection, RxDocument } from 'rxdb';
-import { DatabaseService } from '../services/database.service';
-import { Doc, DocType, Quest } from '../services/models.all';
-import { StateService } from '../services/state.service';
+import { DatabaseService } from '../_shared/services/database.service';
+import { Doc, DocType, Quest } from '../_shared/services/models.all';
+import { StateService } from '../_shared/services/state.service';
 import { QuestModalComponent } from './quest-modal/quest-modal.component';
 
 interface Referable {
