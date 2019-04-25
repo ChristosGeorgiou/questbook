@@ -17,7 +17,7 @@ RxDB.plugin(EncryptionPlugin);
 RxDB.plugin(AdapterIDB);
 RxDB.plugin(AdapterHttp);
 
-const syncURL = 'http://localhost:5984/';
+const syncURL = 'https://db.cgeosoft.com/';
 
 @Injectable()
 export class DatabaseService {

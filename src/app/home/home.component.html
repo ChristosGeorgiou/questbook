@@ -1,20 +1,19 @@
 <ion-content>
   <div style="max-width:500px; margin:0 auto">
     <h1>Tabletop Companion</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. In, nemo voluptatibus laboriosam temporibus est ipsam
+      quasi sequi iste consectetur nisi eum nostrum odit. Non hic saepe sapiente deserunt eveniet unde!</p>
+    <h2>Join campaign</h2>
     <ion-list lines="full">
       <ion-item>
-        <ion-input [(ngModel)]="term" placeholder="Search for campaign..." (keyboard.enter)="search()"></ion-input>
-        <ion-button slot="end" (click)="search()">Search</ion-button>
-      </ion-item>
-      <ion-item *ngFor="let result of results">
-        <span [innerHTML]="result.title|highlight:term"></span>
-        <ion-button slot="end" (click)="join(result)">Join</ion-button>
+        <ion-input [(ngModel)]="joinCampaign" placeholder="Campaign name" (keyboard.enter)="join()"></ion-input>
+        <ion-button slot="end" (click)="join()">Search</ion-button>
       </ion-item>
     </ion-list>
     <h2>Or create a new campaign</h2>
     <ion-list lines="full">
       <ion-item>
-        <ion-input [(ngModel)]="campaignName" placeholder="Campaign Name"></ion-input>
+        <ion-input [(ngModel)]="createCampaign" placeholder="Campaign Name"></ion-input>
         <ion-button slot="end">Create</ion-button>
       </ion-item>
     </ion-list>
