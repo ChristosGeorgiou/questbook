@@ -9,6 +9,8 @@ import { MarkdownModule } from 'ngx-markdown';
 import { WebStorageModule } from 'ngx-store';
 import { AppComponent } from './app.component';
 import { CampaignComponent } from './campaign/campaign.component';
+import { CharacterComponent } from './character/character.component';
+import { EnemyComponent } from './enemy/enemy.component';
 import { HomeComponent } from './home/home.component';
 import { QuestCardComponent } from './quests/quest-card/quest-card.component';
 import { QuestModalComponent } from './quests/quest-modal/quest-modal.component';
@@ -28,10 +30,12 @@ import { StateService } from './_shared/services/state.service';
     QuestModalComponent,
     QuestCardComponent,
     SearchComponent,
+    CharacterComponent,
     ClickStopPropagation,
     CampaignComponent,
     HomeComponent,
     HighlightPipe,
+    EnemyComponent,
   ],
   entryComponents: [
     QuestModalComponent,
