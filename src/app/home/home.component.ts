@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
 import { StateService } from '../_shared/services/state.service';
 
 @Component({
@@ -7,21 +7,21 @@ import { StateService } from '../_shared/services/state.service';
   templateUrl: './home.component.html',
 })
 export class HomeComponent implements OnInit {
-  
+
   joinCampaign = 'testcampaign';
   createCampaign: string;
 
   constructor(
     private state: StateService,
-    private router: Router
+    private navController: NavController
   ) { }
 
   ngOnInit() { }
 
   join() {
-    this.state.campaign = this.joinCampaign;
+    this.state.setCampaign(this.joinCampaign);
     this.state.isMaster = false;
-    this.router.navigate(['/campaign']);
+    this.navController.navigateRoot('/campaign');
   }
 
   create() {

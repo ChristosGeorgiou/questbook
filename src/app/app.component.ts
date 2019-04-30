@@ -5,7 +5,7 @@ import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-root',
-  template: '<ion-router-outlet></ion-router-outlet>'
+  template: '<ion-app><ion-router-outlet #main></ion-router-outlet></ion-app>'
 })
 export class AppComponent {
 

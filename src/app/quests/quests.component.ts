@@ -1,14 +1,14 @@
-import { Component, NgZone, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActionSheetController, AlertController, ModalController } from '@ionic/angular';
 import { RxCollection, RxDocument } from 'rxdb';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { DatabaseService } from '../_shared/services/database.service';
 import { Doc, DocType, Quest } from '../_shared/services/models.all';
+import { Referable } from '../_shared/services/Referable';
 import { StateService } from '../_shared/services/state.service';
 import { QuestModalComponent } from './quest-modal/quest-modal.component';
 
-interface Referable {
-  ref?: string;
-}
 
 @Component({
   selector: 'app-quests',
@@ -17,14 +17,13 @@ interface Referable {
 export class QuestsComponent implements OnInit {
 
   questsCollection: RxCollection<Doc>;
-  quests: (Quest & Referable)[];
+  quests$: Observable<(Quest & Referable)[]>;
 
   constructor(
     private state: StateService,
     private actionSheetCtrl: ActionSheetController,
     private modalCtrl: ModalController,
     private db: DatabaseService,
-    private zone: NgZone,
     private alertCtrl: AlertController,
   ) { }
 
@@ -33,24 +32,13 @@ export class QuestsComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.questsCollection = await this.db.get(this.state.campaign);
-    this.questsCollection.$.subscribe((ev) => {
-      this.getData();
-    });
-    this.getData();
-  }
-
-  async getData() {
-    console.log('load data');
-    const items: Doc[] = await this.questsCollection.find()
-      .where('type').eq(DocType.quest).exec();
-    this.zone.run(() => {
-      this.quests = items.map(i => {
-        const q = i.data as Quest & Referable;
-        q.ref = i._id;
-        return q;
-      });
-    });
+    this.quests$ = this.db
+      .get<Quest>(DocType.quest)
+      .pipe(
+        tap(quests => quests.sort((a, b) => {
+          return b.visible - a.visible;
+        }))
+      );
   }
 
   async questForm(quest: Quest) {
@@ -105,9 +93,6 @@ export class QuestsComponent implements OnInit {
 
   async showQuest(quest) {
     quest.visible = Date.now();
-    this.quests.sort((a, b) => {
-      return b.visible - a.visible;
-    });
     await this.updateQuest(quest);
   }
 

@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { Platform } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 import { StateService } from '../_shared/services/state.service';
 
 @Component({
@@ -33,26 +31,24 @@ export class CampaignComponent {
   }];
 
   constructor(
-    private platform: Platform,
-    private splashScreen: SplashScreen,
-    private statusBar: StatusBar,
     private state: StateService,
+    private navController: NavController
   ) {
-    this.initializeApp();
   }
 
   get isMaster() {
     return this.state.isMaster;
   }
 
-  initializeApp() {
-    this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
-    });
+  get campaign() {
+    return this.state.campaign;
   }
 
   switchMaster() {
     this.state.isMaster = !this.state.isMaster;
+  }
+
+  switchCampaign() {
+    this.navController.navigateRoot('/home');
   }
 }

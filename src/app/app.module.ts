@@ -61,8 +61,11 @@ import { StateService } from './_shared/services/state.service';
       component: CampaignComponent,
       children: [{
         path: '',
-        redirectTo: 'quests',
+        redirectTo: 'enemy',
         pathMatch: 'full'
+      }, {
+        path: 'enemy',
+        component: EnemyComponent
       }, {
         path: 'quests',
         component: QuestsComponent
