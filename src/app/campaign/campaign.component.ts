@@ -46,6 +46,8 @@ export class CampaignComponent implements OnInit {
       return;
     }
     this.campaign$ = this.state.campaign$;
-    this.state.activate(this.state.last);
+    if (!this.state.active$.value) {
+      this.state.activate(this.state.last);
+    }
   }
 }

@@ -27,12 +27,7 @@ export class QuestCardComponent {
     if (!this.quest.visible) {
       this.quest.visible = Date.now();
     }
-
     item.visible = Date.now();
-    // this.quest.items.sort((a, b) => {
-    //   return b.visible - a.visible;
-    // });
-
     this.update.emit(this.quest);
   }
 

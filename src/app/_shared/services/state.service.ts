@@ -15,9 +15,11 @@ export class StateService {
   active$: BehaviorSubject<string> = new BehaviorSubject<string>(null);
 
   loadCampaign(campaign: string) {
-    this.campaigns[campaign] = {
-      isMaster: false
-    };
+    if (!this.campaigns[campaign]) {
+      this.campaigns[campaign] = {
+        isMaster: false
+      };
+    }
     this.activate(campaign);
   }
 
