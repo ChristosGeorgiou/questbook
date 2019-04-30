@@ -1,28 +1,39 @@
-<ion-split-pane>
-  <ion-menu>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>{{campaign}}</ion-title>
-        <ion-buttons slot="end">
-          <ion-button color="secondary" [routerDirection]="'root'" [routerLink]="['/home']">
-            Switch</ion-button>
-        </ion-buttons>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content>
-      <ion-list>
-        <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
-          <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
-            <ion-icon slot="start" [name]="p.icon"></ion-icon>
-            <ion-label>{{p.title}}</ion-label>
+<ng-container *ngIf="campaign$ | async as campaign; else loading">
+  <ion-split-pane>
+    <ion-menu>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button [routerDirection]="'back'" [routerLink]="['/home']">
+              <ion-icon name="apps"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+          <ion-title>{{campaign.title}}</ion-title>
+          <ion-buttons slot="end">
+            <ion-menu-button auto-hide="false" [routerLink]="['/campaign/prefs']">
+              <ion-icon name="cog"></ion-icon>
+            </ion-menu-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-list>
+          <ion-item *ngIf="campaign.isMaster" color="secondary">
+            Master mode is enable
           </ion-item>
-        </ion-menu-toggle>
-        <ion-item (click)="switchMaster()">Switch Visibility
-          <ion-badge *ngIf="isMaster" color="primary" slot="end">Master</ion-badge>
-          <ion-badge *ngIf="!isMaster" color="secondary" slot="end">Player</ion-badge>
-        </ion-item>
-      </ion-list>
-    </ion-content>
-  </ion-menu>
-  <ion-router-outlet main></ion-router-outlet>
-</ion-split-pane>
+          <ion-menu-button auto-hide="false" *ngFor="let p of appPages">
+            <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
+              <ion-icon slot="start" [name]="p.icon"></ion-icon>
+              <ion-label>{{p.title}}</ion-label>
+            </ion-item>
+          </ion-menu-button>
+        </ion-list>
+      </ion-content>
+    </ion-menu>
+    <ion-router-outlet main></ion-router-outlet>
+  </ion-split-pane>
+</ng-container>
+
+<ng-template #loading>
+  <ion-content padding>loading...</ion-content>
+</ng-template>

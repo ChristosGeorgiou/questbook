@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as AdapterHttp from 'pouchdb-adapter-http';
 import * as AdapterIDB from 'pouchdb-adapter-idb';
-import { RxCollection } from 'rxdb';
+import { RxCollection, RxDocument } from 'rxdb';
 import RxDB from 'rxdb/plugins/core';
 import EncryptionPlugin from 'rxdb/plugins/encryption';
 import LeaderelectionPlugin from 'rxdb/plugins/leader-election';
@@ -12,8 +12,7 @@ import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment.js';
 import schema from '../schemas/item.schema.json';
-import { Doc, DocType, Quest } from './models.all';
-import { Referable } from './Referable';
+import { Doc, DocType, Quest, Referable } from './models.all';
 import { StateService } from './state.service';
 
 RxDB.plugin(ValidatePlugin);
@@ -27,9 +26,6 @@ RxDB.plugin(AdapterHttp);
 @Injectable()
 export class DatabaseService {
 
-  collections: { [key: string]: RxCollection } = {};
-  sets$: { [key: string]: Subject<Referable[]> } = {};
-
   constructor(
     private state: StateService,
   ) {
@@ -38,29 +34,43 @@ export class DatabaseService {
       this.sets$[t] = new Subject<Referable[]>();
     });
 
-    this.state.activeCampaign.subscribe(async (campaign) => {
+    this.state.active$.subscribe(async (campaign) => {
       await this._loadCampaign(campaign);
     });
   }
 
-  add<T>(type: DocType, item: T) {
-    const doc = {
-      ts: Date.now(),
-      type: type,
-      data: item
-    };
-    console.log('doc', doc);
-    const campaign = this.collections[this.state.campaign];
-    campaign.insert(doc);
-  }
+  collections: { [key: string]: RxCollection } = {};
+  sets$: { [key: string]: Subject<Referable[]> } = {};
 
-  get<T>(quest: DocType) {// }: Subject<(T & Referable)[]> {
-    console.log(this.sets$);
+  get<T>(quest: DocType) {
     return this.sets$[DocType[quest]].pipe(
       map(i => {
         return i as (T & Referable)[];
       })
     );
+  }
+
+  async add<T>(type: DocType, item: T) {
+    const doc = {
+      ts: Date.now(),
+      type: type,
+      data: item
+    };
+    await this.collections[this.state.last].insert(doc);
+  }
+
+  async update(ref: string, data: any) {
+    const q: RxDocument<Doc> = await this.collections[this.state.last].findOne(ref).exec();
+    await q.update({
+      $set: {
+        data
+      }
+    });
+  }
+
+  async remove(ref: any) {
+    const q: RxDocument<Doc> = await this.collections[this.state.last].findOne(ref).exec();
+    await q.remove();
   }
 
   private async _loadCampaign(campaign: string) {

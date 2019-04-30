@@ -8,8 +8,8 @@ import { StateService } from '../_shared/services/state.service';
 })
 export class HomeComponent implements OnInit {
 
-  joinCampaign = 'testcampaign';
   createCampaign: string;
+  joinedCampaigns: string[];
 
   constructor(
     private state: StateService,
@@ -18,10 +18,9 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() { }
 
-  join() {
-    this.state.setCampaign(this.joinCampaign);
-    this.state.isMaster = false;
-    this.navController.navigateRoot('/campaign');
+  join(campaign) {
+    this.state.loadCampaign(campaign);
+    this.navController.navigateForward('/campaign');
   }
 
   create() {

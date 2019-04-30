@@ -1,14 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { ActionSheetController, AlertController, ModalController } from '@ionic/angular';
-import { RxDocument } from 'rxdb';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { DatabaseService } from '../_shared/services/database.service';
-import { Doc, DocType, Quest } from '../_shared/services/models.all';
-import { Referable } from '../_shared/services/Referable';
+import { DocType, Quest, Referable } from '../_shared/services/models.all';
 import { StateService } from '../_shared/services/state.service';
 import { QuestModalComponent } from './quest-modal/quest-modal.component';
-
 
 @Component({
   selector: 'app-quests',
@@ -16,6 +13,7 @@ import { QuestModalComponent } from './quest-modal/quest-modal.component';
 })
 export class QuestsComponent implements OnInit {
 
+  isMaster = false;
   quests$: Observable<(Quest & Referable)[]>;
 
   constructor(
@@ -26,10 +24,6 @@ export class QuestsComponent implements OnInit {
     private alertCtrl: AlertController,
   ) { }
 
-  get isMaster() {
-    return this.state.isMaster;
-  }
-
   async ngOnInit() {
     this.quests$ = this.db
       .get<Quest>(DocType.quest)
@@ -38,6 +32,10 @@ export class QuestsComponent implements OnInit {
           return b.visible - a.visible;
         }))
       );
+
+    this.state.active$.subscribe(active => {
+      this.isMaster = this.state.campaigns[active] ? this.state.campaigns[active].isMaster : false;
+    });
   }
 
   async questForm(quest: Quest) {
@@ -56,12 +54,12 @@ export class QuestsComponent implements OnInit {
       }
     });
 
-    modal.onDidDismiss().then((res) => {
+    modal.onDidDismiss().then(async (res) => {
       const newq: Quest & Referable = res.data;
       if (newq.ref) {
         this.updateQuest(newq);
       } else {
-        this.db.add<Quest>(DocType.quest, newq);
+        await this.db.add<Quest>(DocType.quest, newq);
       }
     });
 
@@ -97,12 +95,7 @@ export class QuestsComponent implements OnInit {
   }
 
   async updateQuest(quest: Quest & Referable) {
-    const q: RxDocument<Doc> = await this.questsCollection.findOne(quest.ref).exec();
-    await q.update({
-      $set: {
-        data: quest
-      }
-    });
+    await this.db.update(quest.ref, quest);
   }
 
   async removeQuest(quest) {
@@ -120,12 +113,31 @@ export class QuestsComponent implements OnInit {
         {
           text: 'Remove',
           handler: async () => {
-            const q: RxDocument<Doc> = await this.questsCollection.findOne(quest.ref).exec();
-            await q.remove();
+            await this.db.remove(quest.ref);
           }
         }
       ]
     });
     await alert.present();
+  }
+
+  getRef(i, q: Referable) {
+    return q.ref;
+  }
+}
+
+@Pipe({
+  name: 'visible',
+  pure: false
+})
+export class VisiblePipe implements PipeTransform {
+  constructor(private state: StateService) { }
+
+  transform(items: any[]): any {
+    if (!items) {
+      return items;
+    }
+
+    return items.filter(item => item.visible || this.state.campaign$.value.isMaster);
   }
 }

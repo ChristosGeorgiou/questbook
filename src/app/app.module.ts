@@ -12,9 +12,10 @@ import { CampaignComponent } from './campaign/campaign.component';
 import { CharacterComponent } from './character/character.component';
 import { EnemyComponent } from './enemy/enemy.component';
 import { HomeComponent } from './home/home.component';
+import { PrefsComponent } from './prefs/prefs.component';
 import { QuestCardComponent } from './quests/quest-card/quest-card.component';
 import { QuestModalComponent } from './quests/quest-modal/quest-modal.component';
-import { QuestsComponent } from './quests/quests.component';
+import { QuestsComponent, VisiblePipe } from './quests/quests.component';
 import { SearchComponent } from './search/search.component';
 import { ClickStopPropagation } from './_shared/directives/click-stop-propagation.directive';
 import { NewBadgeComponent } from './_shared/new-badge/new-badge.component';
@@ -36,6 +37,9 @@ import { StateService } from './_shared/services/state.service';
     HomeComponent,
     HighlightPipe,
     EnemyComponent,
+    PrefsComponent,
+
+    VisiblePipe,
   ],
   entryComponents: [
     QuestModalComponent,
@@ -61,7 +65,7 @@ import { StateService } from './_shared/services/state.service';
       component: CampaignComponent,
       children: [{
         path: '',
-        redirectTo: 'enemy',
+        redirectTo: 'quests',
         pathMatch: 'full'
       }, {
         path: 'enemy',
@@ -69,6 +73,9 @@ import { StateService } from './_shared/services/state.service';
       }, {
         path: 'quests',
         component: QuestsComponent
+      }, {
+        path: 'prefs',
+        component: PrefsComponent
       }]
     }])
   ],

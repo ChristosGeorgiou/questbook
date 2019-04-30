@@ -13,9 +13,9 @@ export interface Data {
 
 export interface Campaign extends Data {
   title: string;
-  owner: string;
-  description: string;
-  text: string;
+  owner?: string;
+  description?: string;
+  text?: string;
 }
 
 export interface Quest extends Data {
@@ -82,4 +82,12 @@ export interface Doc {
   ts: number;
   type: DocType;
   data: DocData;
+}
+
+export interface Preferences {
+  isMaster?: boolean;
+}
+
+export interface Referable {
+  ref?: string;
 }
