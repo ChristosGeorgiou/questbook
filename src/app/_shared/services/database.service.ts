@@ -12,9 +12,9 @@ import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment.js';
 import schema from '../schemas/item.schema.json';
-import { Doc, DocType, Quest } from './models.all.js';
+import { Doc, DocType, Quest } from './models.all';
 import { Referable } from './Referable';
-import { StateService } from './state.service.js';
+import { StateService } from './state.service';
 
 RxDB.plugin(ValidatePlugin);
 RxDB.plugin(UpdatePlugin);
@@ -26,6 +26,7 @@ RxDB.plugin(AdapterHttp);
 
 @Injectable()
 export class DatabaseService {
+
   collections: { [key: string]: RxCollection } = {};
   sets$: { [key: string]: Subject<Referable[]> } = {};
 
@@ -38,11 +39,23 @@ export class DatabaseService {
     });
 
     this.state.activeCampaign.subscribe(async (campaign) => {
-      await this._load(campaign);
+      await this._loadCampaign(campaign);
     });
   }
 
+  add<T>(type: DocType, item: T) {
+    const doc = {
+      ts: Date.now(),
+      type: type,
+      data: item
+    };
+    console.log('doc', doc);
+    const campaign = this.collections[this.state.campaign];
+    campaign.insert(doc);
+  }
+
   get<T>(quest: DocType) {// }: Subject<(T & Referable)[]> {
+    console.log(this.sets$);
     return this.sets$[DocType[quest]].pipe(
       map(i => {
         return i as (T & Referable)[];
@@ -50,27 +63,22 @@ export class DatabaseService {
     );
   }
 
-  private async _load(campaign: string) {
+  private async _loadCampaign(campaign: string) {
+
+    console.log('load campaign', campaign);
 
     if (!this.collections[campaign]) {
-      this.collections[campaign] = await this._create(campaign);
+      this.collections[campaign] = await this._createDb(campaign);
     }
 
-    this.collections[campaign].$.subscribe(() => {
-      Object.keys(DocType).forEach(async t => {
-        const items: Doc[] = await this.collections[campaign].find().where('type').eq(t).exec();
-        const mappedItems = items.map(i => {
-          const q = i.data as Quest & Referable;
-          q.ref = i._id;
-          return q;
-        });
-        this.sets$[t].next(mappedItems);
-      });
+    this.collections[campaign].$.subscribe(async () => {
+      await this._loadSets(campaign);
     });
 
+    await this._loadSets(campaign);
   }
 
-  private async _create(campaign: string) {
+  private async _createDb(campaign: string) {
     console.log('DatabaseService: creating database..');
     const db = await RxDB.create({ name: campaign, adapter: 'idb' });
 
@@ -85,5 +93,17 @@ export class DatabaseService {
     db[campaign].sync({ remote: environment.database + campaign + '/' });
 
     return db[campaign];
+  }
+
+  private async _loadSets(campaign: string) {
+    Object.keys(DocType).forEach(async (t) => {
+      const items: Doc[] = await this.collections[campaign].find().where('type').eq(DocType[t]).exec();
+      const mappedItems = items.map(i => {
+        const q = i.data as Quest & Referable;
+        q.ref = i._id;
+        return q;
+      });
+      this.sets$[t].next(mappedItems);
+    });
   }
 }

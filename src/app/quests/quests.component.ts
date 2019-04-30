@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActionSheetController, AlertController, ModalController } from '@ionic/angular';
-import { RxCollection, RxDocument } from 'rxdb';
+import { RxDocument } from 'rxdb';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { DatabaseService } from '../_shared/services/database.service';
@@ -16,7 +16,6 @@ import { QuestModalComponent } from './quest-modal/quest-modal.component';
 })
 export class QuestsComponent implements OnInit {
 
-  questsCollection: RxCollection<Doc>;
   quests$: Observable<(Quest & Referable)[]>;
 
   constructor(
@@ -62,11 +61,7 @@ export class QuestsComponent implements OnInit {
       if (newq.ref) {
         this.updateQuest(newq);
       } else {
-        this.questsCollection.insert({
-          ts: Date.now(),
-          type: DocType.quest,
-          data: newq
-        });
+        this.db.add<Quest>(DocType.quest, newq);
       }
     });
 

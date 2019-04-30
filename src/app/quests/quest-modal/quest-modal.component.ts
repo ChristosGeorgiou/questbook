@@ -25,6 +25,7 @@ export class QuestModalComponent {
   }
 
   async save() {
+    this.quest.items = this.quest.items.filter(i => i.content);
     this.modalCtrl.dismiss(this.quest);
   }
 }

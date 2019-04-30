@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { StateService } from '../_shared/services/state.service';
 
@@ -6,7 +6,21 @@ import { StateService } from '../_shared/services/state.service';
   selector: 'app-campaign',
   templateUrl: 'campaign.component.html'
 })
-export class CampaignComponent {
+export class CampaignComponent implements OnInit {
+
+  constructor(
+    private state: StateService,
+    private navController: NavController
+  ) {
+  }
+
+  get isMaster() {
+    return this.state.isMaster;
+  }
+
+  get campaign() {
+    return this.state.campaign;
+  }
 
   public appPages = [{
     title: 'Quests',
@@ -30,18 +44,13 @@ export class CampaignComponent {
     icon: 'map'
   }];
 
-  constructor(
-    private state: StateService,
-    private navController: NavController
-  ) {
-  }
+  ngOnInit(): void {
+    if (!this.state.campaign) {
+      this.navController.navigateRoot('/home');
+      return;
+    }
 
-  get isMaster() {
-    return this.state.isMaster;
-  }
-
-  get campaign() {
-    return this.state.campaign;
+    this.state.activeCampaign.next(this.state.campaign)
   }
 
   switchMaster() {
