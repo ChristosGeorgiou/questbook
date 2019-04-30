@@ -16,11 +16,11 @@ export class QuestCardComponent {
   ) { }
 
   get isMaster() {
-    return this.state.isMaster;
+    return this.state.campaign$.value.isMaster;
   }
 
   get hasItems() {
-    return this.quest.items.findIndex(i => i.visible !== null) !== -1;
+    return this.quest.items.findIndex(i => i.visible !== null || this.isMaster) !== -1;
   }
 
   async showItem(item) {

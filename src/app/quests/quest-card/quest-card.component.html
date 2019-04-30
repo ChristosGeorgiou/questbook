@@ -14,7 +14,7 @@
   <ion-card-content *ngIf="quest.description">
     <markdown [data]="quest.description"></markdown>
   </ion-card-content>
-  <ion-list *ngIf="hasItems || isMaster" lines="full" lines="none">
+  <ion-list *ngIf="hasItems" lines="full" lines="none">
     <ion-list-header>
       <ion-label>KEYPOINTS</ion-label>
     </ion-list-header>

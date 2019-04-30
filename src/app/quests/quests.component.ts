@@ -12,9 +12,8 @@ import { QuestModalComponent } from './quest-modal/quest-modal.component';
   templateUrl: './quests.component.html',
 })
 export class QuestsComponent implements OnInit {
-
-  isMaster = false;
   quests$: Observable<(Quest & Referable)[]>;
+  campaign$: any;
 
   constructor(
     private state: StateService,
@@ -25,6 +24,7 @@ export class QuestsComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
+    this.campaign$ = this.state.campaign$;
     this.quests$ = this.db
       .get<Quest>(DocType.quest)
       .pipe(
@@ -32,10 +32,6 @@ export class QuestsComponent implements OnInit {
           return b.visible - a.visible;
         }))
       );
-
-    this.state.active$.subscribe(active => {
-      this.isMaster = this.state.campaigns[active] ? this.state.campaigns[active].isMaster : false;
-    });
   }
 
   async questForm(quest: Quest) {
@@ -67,7 +63,6 @@ export class QuestsComponent implements OnInit {
   }
 
   async presentActionSheet(quest: Quest) {
-    if (!this.isMaster) { return; }
     const actionSheet = await this.actionSheetCtrl.create({
       buttons: [{
         text: 'Show', icon: 'eye', handler: () => { this.showQuest(quest); }

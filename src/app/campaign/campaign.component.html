@@ -17,16 +17,16 @@
         </ion-toolbar>
       </ion-header>
       <ion-content>
-        <ion-list>
-          <ion-item *ngIf="campaign.isMaster" color="secondary">
-            Master mode is enable
-          </ion-item>
-          <ion-menu-button auto-hide="false" *ngFor="let p of appPages">
+        <div *ngIf="campaign.isMaster" style="text-align: center;padding:1rem;background:#222;color:#fff;">
+          Master mode is enable
+        </div>
+        <ion-list lines="full">
+          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
             <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
               <ion-icon slot="start" [name]="p.icon"></ion-icon>
               <ion-label>{{p.title}}</ion-label>
             </ion-item>
-          </ion-menu-button>
+          </ion-menu-toggle>
         </ion-list>
       </ion-content>
     </ion-menu>
