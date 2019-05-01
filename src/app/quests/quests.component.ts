@@ -63,6 +63,7 @@ export class QuestsComponent implements OnInit {
   }
 
   async presentActionSheet(quest: Quest) {
+    if (!this.state.campaign$.value.isMaster) { return }
     const actionSheet = await this.actionSheetCtrl.create({
       buttons: [{
         text: 'Show', icon: 'eye', handler: () => { this.showQuest(quest); }

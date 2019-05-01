@@ -8,7 +8,7 @@
 </ion-header>
 <ion-content>
   <div class="boxed">
-    <ng-container *ngIf="quests$ | async as quests; else loading">
+    <ng-container *ngIf="(quests$ | async) as quests; else loading">
       <ng-container *ngIf="(quests | visible).length; else empty">
         <ng-container *ngFor="let quest of quests | visible; trackBy: getRef">
           <app-quest-card [quest]="quest" (update)="updateQuest($event)" (click)="presentActionSheet(quest)">

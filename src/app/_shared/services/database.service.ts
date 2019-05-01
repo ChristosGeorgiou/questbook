@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import * as AdapterHttp from 'pouchdb-adapter-http';
 import * as AdapterIDB from 'pouchdb-adapter-idb';
 import { RxCollection, RxDocument } from 'rxdb';
@@ -8,7 +8,7 @@ import LeaderelectionPlugin from 'rxdb/plugins/leader-election';
 import ReplicationPlugin from 'rxdb/plugins/replication';
 import UpdatePlugin from 'rxdb/plugins/update';
 import ValidatePlugin from 'rxdb/plugins/validate';
-import { Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment.js';
 import schema from '../schemas/item.schema.json';
@@ -26,12 +26,16 @@ RxDB.plugin(AdapterHttp);
 @Injectable()
 export class DatabaseService {
 
+  collections: { [key: string]: RxCollection } = {};
+  sets$: { [key: string]: BehaviorSubject<Referable[]> } = {};
+
   constructor(
     private state: StateService,
+    private zone: NgZone
   ) {
 
     Object.keys(DocType).forEach(async t => {
-      this.sets$[t] = new Subject<Referable[]>();
+      this.sets$[t] = new BehaviorSubject<Referable[]>([]);
     });
 
     this.state.active$.subscribe(async (campaign) => {
@@ -39,11 +43,9 @@ export class DatabaseService {
     });
   }
 
-  collections: { [key: string]: RxCollection } = {};
-  sets$: { [key: string]: Subject<Referable[]> } = {};
-
   get<T>(quest: DocType) {
-    return this.sets$[DocType[quest]].pipe(
+    const source = this.sets$[DocType[quest]];
+    return source.pipe(
       map(i => {
         return i as (T & Referable)[];
       })
@@ -113,7 +115,9 @@ export class DatabaseService {
         q.ref = i._id;
         return q;
       });
-      this.sets$[t].next(mappedItems);
+      this.zone.run(() => {
+        this.sets$[t].next(mappedItems);
+      });
     });
   }
 }
