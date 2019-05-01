@@ -7,6 +7,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:prod": "ng run app:build:production",
+    "prebuild:prod": "ts-node -O \"{\\\"module\\\": \\\"commonjs\\\"}\" git.version.ts",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -25,6 +27,7 @@
     "@ionic-native/status-bar": "^5.0.0",
     "@ionic/angular": "^4.1.0",
     "core-js": "^2.5.4",
+    "git-commit-info": "^1.0.0",
     "ngx-markdown": "^7.1.5",
     "ngx-markdown-editor": "^1.2.0",
     "ngx-store": "^2.1.0",

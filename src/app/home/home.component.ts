@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { environment } from '../../environments/environment';
 import { StateService } from '../_shared/services/state.service';
 
 @Component({
@@ -16,6 +17,10 @@ export class HomeComponent implements OnInit {
     private navController: NavController
   ) { }
 
+  get versions() {
+    return environment.versions;
+  }
+  
   ngOnInit() { }
 
   join(campaign) {
