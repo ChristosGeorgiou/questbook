@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 import { Campaign, Preferences } from '../_shared/services/models.all';
 import { StateService } from '../_shared/services/state.service';
 
@@ -38,6 +39,10 @@ export class CampaignComponent implements OnInit {
     private state: StateService,
     private navController: NavController
   ) {
+  }
+
+  get versions() {
+    return environment.versions;
   }
 
   ngOnInit(): void {
