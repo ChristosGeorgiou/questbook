@@ -1,6 +1,6 @@
 {
   "title": "item",
-  "version": 0,
+  "version": 1,
   "type": "object",
   "disableKeyCompression": true,
   "properties": {
@@ -19,5 +19,6 @@
     "show": {
       "type": "boolean"
     }
-  }
+  },
+  "attachments": true
 }

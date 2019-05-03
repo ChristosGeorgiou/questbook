@@ -10,6 +10,7 @@ import { WebStorageModule } from 'ngx-store';
 import { AppComponent } from './app.component';
 import { CampaignComponent } from './campaign/campaign.component';
 import { CharacterCardComponent } from './characters/character-card/character-card.component';
+import { CharacterFormComponent } from './characters/character-form/character-form.component';
 import { CharactersComponent } from './characters/characters.component';
 import { EnemyComponent } from './enemy/enemy.component';
 import { HomeComponent } from './home/home.component';
@@ -42,10 +43,12 @@ import { StateService } from './_shared/services/state.service';
     EnemyComponent,
     PrefsComponent,
     FooterComponent,
+    CharacterFormComponent,
 
     VisiblePipe,
   ],
   entryComponents: [
+    CharacterFormComponent,
     QuestFormComponent,
   ],
   imports: [

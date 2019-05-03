@@ -1,3 +1,36 @@
-<p>
-  character-form works!
-</p>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Character</ion-title>
+    <ion-button slot="end" color="success" fill="outline" size="small" (click)="save()">
+      Save</ion-button>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list lines="full">
+    <ion-item>
+      <ion-label position="stacked">Name</ion-label>
+      <ion-input [(ngModel)]="character.name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Portait</ion-label>
+      <ion-input [(ngModel)]="character.portrait"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Description</ion-label>
+      <ion-textarea [(ngModel)]="character.description" rows="6"></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-label>Keypoints</ion-label>
+      <ion-button color="success" fill="outline" size="small" slot="end" (click)="addItem()">
+        + Add</ion-button>
+    </ion-item>
+    <ng-container *ngFor="let item of character.items; let i = index">
+      <ion-item>
+        <ion-input [(ngModel)]="item.content" placeholder="keypoint"></ion-input>
+        <ion-button color="danger" fill="outline" size="small" slot="end" (click)="removeItem(i)">
+          <ion-icon name="trash"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ng-container>
+  </ion-list>
+</ion-content>

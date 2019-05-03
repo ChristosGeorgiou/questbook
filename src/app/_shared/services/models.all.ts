@@ -39,8 +39,6 @@ export interface Monster extends Data {
 export interface Character extends Data {
   name: string;
   description: string;
-  notes: string;
-  thumb: string;
   portrait: string;
   visible: number;
   items: {

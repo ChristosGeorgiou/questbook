@@ -97,7 +97,10 @@ export class DatabaseService {
     console.log('DatabaseService: create collections');
     await db.collection({
       name: campaign,
-      schema: schema
+      schema: schema,
+      migrationStrategies: {
+        1: (oldDoc) => oldDoc
+      }
     });
 
     // sync
