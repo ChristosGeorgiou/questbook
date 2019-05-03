@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { environment } from '../../environments/environment';
 import { StateService } from '../_shared/services/state.service';
 
 @Component({
@@ -9,21 +8,18 @@ import { StateService } from '../_shared/services/state.service';
 })
 export class HomeComponent implements OnInit {
 
-  createCampaign: string;
-  joinedCampaigns: string[];
+  campaigns: string[];
 
   constructor(
     private state: StateService,
     private navController: NavController
   ) { }
 
-  get versions() {
-    return environment.versions;
+  ngOnInit() {
+    this.campaigns = Object.keys(this.state.campaigns);
   }
-  
-  ngOnInit() { }
 
-  join(campaign) {
+  open(campaign) {
     this.state.loadCampaign(campaign);
     this.navController.navigateForward('/campaign');
   }

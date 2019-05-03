@@ -3,27 +3,42 @@
     <h1>Tabletop Companion</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. In, nemo voluptatibus laboriosam temporibus est ipsam
       quasi sequi iste consectetur nisi eum nostrum odit. Non hic saepe sapiente deserunt eveniet unde!</p>
+
+    <ion-list lines="full" *ngIf="campaigns">
+      <ion-item>
+        <h4>Open</h4>
+      </ion-item>
+      <ion-item *ngFor="let campaign of campaigns">
+        {{campaign}}
+        <ion-button slot="end" (click)="open(campaign)">Open</ion-button>
+      </ion-item>
+    </ion-list>
+
     <ion-list lines="full">
       <ion-item>
-        <h4>Join a campaign</h4>
+        <div>
+          <h4>Join</h4>
+          <p>Ask your master for campaign name or join <strong>demo</strong></p>
+        </div>
       </ion-item>
       <ion-item>
-        <ion-input #joinCampaign placeholder="Campaign name" (keyboard.enter)="join(joinCampaign.value)"></ion-input>
-        <ion-button slot="end" (click)="join(joinCampaign.value)">Join</ion-button>
+        <ion-input #join placeholder="Campaign name" (keyboard.enter)="open(join.value)"></ion-input>
+        <ion-button slot="end" (click)="open(join.value)">Join</ion-button>
       </ion-item>
-      <ng-container *ngIf="joinedCampaigns">
-        <ion-item>
-          <h4>Joined campaigns</h4>
-        </ion-item>
-        <ion-item *ngFor="let campaign of joinedCampaigns" (click)="join(campaign)">
-          {{campaign}}
-        </ion-item>
-      </ng-container>
     </ion-list>
-    <div padding style="text-align: center;">- or -</div>
-    <ion-button expand='block'>start a new campaign</ion-button>
-    <div class="version-footer">
-        version: {{versions.version}} - revision: {{versions.revision}}<br>release: {{versions.release|date:'yyyy-MM-dd HH:mm:ss'}}
-    </div>
+
+    <ion-list lines="full">
+      <ion-item>
+        <div>
+          <h4>Create</h4>
+          <p>Enter a friendly name for your campaign</p>
+        </div>
+      </ion-item>
+      <ion-item>
+        <ion-input #new placeholder="Campaign name" (keyboard.enter)="create(new.value)"></ion-input>
+        <ion-button slot="end" (click)="create(new.value)">Create</ion-button>
+      </ion-item>
+    </ion-list>
+    <app-footer></app-footer>
   </div>
 </ion-content>

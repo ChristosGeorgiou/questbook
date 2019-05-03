@@ -17,6 +17,7 @@ import { QuestCardComponent } from './quests/quest-card/quest-card.component';
 import { QuestModalComponent } from './quests/quest-modal/quest-modal.component';
 import { QuestsComponent, VisiblePipe } from './quests/quests.component';
 import { SearchComponent } from './search/search.component';
+import { FooterComponent } from './_shared/components/footer/footer.component';
 import { ClickStopPropagation } from './_shared/directives/click-stop-propagation.directive';
 import { NewBadgeComponent } from './_shared/new-badge/new-badge.component';
 import { HighlightPipe } from './_shared/pipes/highlight.pipe';
@@ -38,6 +39,7 @@ import { StateService } from './_shared/services/state.service';
     HighlightPipe,
     EnemyComponent,
     PrefsComponent,
+    FooterComponent,
 
     VisiblePipe,
   ],
