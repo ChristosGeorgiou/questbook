@@ -3,16 +3,16 @@ import { ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { DatabaseService } from '../_shared/services/database.service';
-import { DocType, Quest, Referable } from '../_shared/services/models.all';
+import { Character, DocType, Referable } from '../_shared/services/models.all';
 import { StateService } from '../_shared/services/state.service';
-import { QuestFormComponent } from './quest-form/quest-form.component';
+import { CharacterFormComponent } from './character-form/character-form.component';
 
 @Component({
-  selector: 'app-quests',
-  templateUrl: './quests.component.html',
+  selector: 'app-characters',
+  templateUrl: './characters.component.html',
 })
-export class QuestsComponent implements OnInit {
-  quests$: Observable<(Quest & Referable)[]>;
+export class CharactersComponent implements OnInit {
+  characters$: Observable<(Character & Referable)[]>;
   campaign$: any;
 
   constructor(
@@ -23,10 +23,10 @@ export class QuestsComponent implements OnInit {
 
   async ngOnInit() {
     this.campaign$ = this.state.campaign$;
-    this.quests$ = this.db
-      .get<Quest>(DocType.quest)
+    this.characters$ = this.db
+      .get<Character>(DocType.character)
       .pipe(
-        tap(quests => quests.sort((a, b) => {
+        tap(characters => characters.sort((a, b) => {
           return b.visible - a.visible;
         }))
       );
@@ -38,9 +38,9 @@ export class QuestsComponent implements OnInit {
 
   async create() {
     const modal = await this.modalCtrl.create({
-      component: QuestFormComponent,
+      component: CharacterFormComponent,
       componentProps: {
-        quest: {
+        character: {
           visible: null,
           items: [{
             visible: null
@@ -50,8 +50,8 @@ export class QuestsComponent implements OnInit {
     });
 
     modal.onDidDismiss().then(async (res) => {
-      const newq: Quest & Referable = res.data;
-      await this.db.add<Quest>(DocType.quest, newq);
+      const newq: Character & Referable = res.data;
+      await this.db.add<Character>(DocType.character, newq);
     });
 
     await modal.present();

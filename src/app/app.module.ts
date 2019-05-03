@@ -9,12 +9,13 @@ import { MarkdownModule } from 'ngx-markdown';
 import { WebStorageModule } from 'ngx-store';
 import { AppComponent } from './app.component';
 import { CampaignComponent } from './campaign/campaign.component';
-import { CharacterComponent } from './character/character.component';
+import { CharacterCardComponent } from './characters/character-card/character-card.component';
+import { CharactersComponent } from './characters/characters.component';
 import { EnemyComponent } from './enemy/enemy.component';
 import { HomeComponent } from './home/home.component';
 import { PrefsComponent } from './prefs/prefs.component';
 import { QuestCardComponent } from './quests/quest-card/quest-card.component';
-import { QuestModalComponent } from './quests/quest-modal/quest-modal.component';
+import { QuestFormComponent } from './quests/quest-form/quest-form.component';
 import { QuestsComponent, VisiblePipe } from './quests/quests.component';
 import { SearchComponent } from './search/search.component';
 import { FooterComponent } from './_shared/components/footer/footer.component';
@@ -29,10 +30,11 @@ import { StateService } from './_shared/services/state.service';
     AppComponent,
     NewBadgeComponent,
     QuestsComponent,
-    QuestModalComponent,
+    QuestFormComponent,
     QuestCardComponent,
     SearchComponent,
-    CharacterComponent,
+    CharactersComponent,
+    CharacterCardComponent,
     ClickStopPropagation,
     CampaignComponent,
     HomeComponent,
@@ -44,7 +46,7 @@ import { StateService } from './_shared/services/state.service';
     VisiblePipe,
   ],
   entryComponents: [
-    QuestModalComponent,
+    QuestFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -72,6 +74,9 @@ import { StateService } from './_shared/services/state.service';
       }, {
         path: 'enemy',
         component: EnemyComponent
+      }, {
+        path: 'characters',
+        component: CharactersComponent
       }, {
         path: 'quests',
         component: QuestsComponent

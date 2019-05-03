@@ -42,6 +42,11 @@ export interface Character extends Data {
   notes: string;
   thumb: string;
   portrait: string;
+  visible: number;
+  items: {
+      content?: string,
+      visible: number
+  }[];
 }
 
 export interface Item extends Data {

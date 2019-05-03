@@ -3,10 +3,10 @@ import { ModalController } from '@ionic/angular';
 import { Quest } from '../../_shared/services/models.all';
 
 @Component({
-  selector: 'app-quest-modal',
-  templateUrl: './quest-modal.component.html',
+  selector: 'app-quest-form',
+  templateUrl: './quest-form.component.html',
 })
-export class QuestModalComponent {
+export class QuestFormComponent {
 
   @Input() quest: Quest;
 

@@ -15,10 +15,10 @@ export class CampaignComponent implements OnInit {
     title: 'Quests',
     url: '/campaign/quests',
     icon: 'paper'
-    // }, {
-    //   title: 'Characters',
-    //   url: '/campaign/character',
-    //   icon: 'contacts'
+    }, {
+      title: 'Characters',
+      url: '/campaign/characters',
+      icon: 'contacts'
     // }, {
     //   title: 'Monsters',
     //   url: '/campaign/monster',

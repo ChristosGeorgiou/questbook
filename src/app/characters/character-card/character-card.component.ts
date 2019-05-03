@@ -1,17 +1,17 @@
 import { Component, Input } from '@angular/core';
 import { ActionSheetController, AlertController, ModalController } from '@ionic/angular';
 import { DatabaseService } from '../../_shared/services/database.service';
-import { Quest, Referable } from '../../_shared/services/models.all';
+import { Character, Referable } from '../../_shared/services/models.all';
 import { StateService } from '../../_shared/services/state.service';
-import { QuestFormComponent } from '../quest-form/quest-form.component';
+import { CharacterFormComponent } from '../character-form/character-form.component';
 
 @Component({
-  selector: 'app-quest-card',
-  templateUrl: './quest-card.component.html',
+  selector: 'app-character-card',
+  templateUrl: './character-card.component.html',
 })
-export class QuestCardComponent {
+export class CharacterCardComponent {
 
-  @Input() quest: Quest & Referable;
+  @Input() character: Character & Referable;
 
   constructor(
     private state: StateService,
@@ -26,12 +26,12 @@ export class QuestCardComponent {
   }
 
   get hasItems() {
-    return this.quest.items.findIndex(i => i.visible !== null || this.isMaster) !== -1;
+    return this.character.items.findIndex(i => i.visible !== null || this.isMaster) !== -1;
   }
 
   async showItem(item) {
-    if (!this.quest.visible) {
-      this.quest.visible = Date.now();
+    if (!this.character.visible) {
+      this.character.visible = Date.now();
     }
     item.visible = Date.now();
   }
@@ -55,26 +55,26 @@ export class QuestCardComponent {
   }
 
   async show() {
-    this.quest.visible = Date.now();
-    await this.db.update(this.quest.ref, this.quest);
+    this.character.visible = Date.now();
+    await this.db.update(this.character.ref, this.character);
   }
 
   async hide() {
-    this.quest.visible = null;
-    await this.db.update(this.quest.ref, this.quest);
+    this.character.visible = null;
+    await this.db.update(this.character.ref, this.character);
   }
 
   async edit() {
     const modal = await this.modalCtrl.create({
-      component: QuestFormComponent,
+      component: CharacterFormComponent,
       componentProps: {
-        quest: { ...this.quest }
+        character: { ...this.character }
       }
     });
 
     modal.onDidDismiss().then(async (res) => {
-      const newq: Quest & Referable = res.data;
-      await this.db.update(this.quest.ref, newq);
+      const newq: Character & Referable = res.data;
+      await this.db.update(this.character.ref, newq);
     });
 
     await modal.present();
@@ -83,7 +83,7 @@ export class QuestCardComponent {
   async remove() {
     const alert = await this.alertCtrl.create({
       header: 'Confirm Remove',
-      subHeader: 'This quest will be removed from all players. This action is not reversible.',
+      subHeader: 'This character will be removed from all players. This action is not reversible.',
       buttons: [
         {
           text: 'Cancel',
@@ -95,7 +95,7 @@ export class QuestCardComponent {
         {
           text: 'Remove',
           handler: async () => {
-            await this.db.remove(this.quest.ref);
+            await this.db.remove(this.character.ref);
           }
         }
       ]
