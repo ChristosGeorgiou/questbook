@@ -12,7 +12,7 @@ import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment.js';
 import schema from '../schemas/item.schema.json';
-import { Doc, DocType, Quest, Referable } from './models.all';
+import { Doc, DocType, Referable } from './models.all';
 import { StateService } from './state.service';
 
 RxDB.plugin(ValidatePlugin);
@@ -113,11 +113,13 @@ export class DatabaseService {
   private async _loadSets(campaign: string) {
     Object.keys(DocType).forEach(async (t) => {
       const items: Doc[] = await this.collections[campaign].find().where('type').eq(DocType[t]).exec();
-      const mappedItems = items.map(i => {
-        const q = i.data as Quest & Referable;
-        q.ref = i._id;
-        return q;
-      });
+      const mappedItems = items
+        .filter(i => i.data)
+        .map(i => {
+          const q = i.data as Referable;
+          q.ref = i._id;
+          return q;
+        });
       this.zone.run(() => {
         this.sets$[t].next(mappedItems);
       });

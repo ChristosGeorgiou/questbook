@@ -73,6 +73,7 @@ export class CharacterCardComponent {
     });
 
     modal.onDidDismiss().then(async (res) => {
+      if (!res.data) { return; }
       const newq: Character & Referable = res.data;
       await this.db.update(this.character.ref, newq);
     });

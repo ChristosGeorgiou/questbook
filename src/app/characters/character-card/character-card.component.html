@@ -1,36 +1,36 @@
 <ion-card>
-    <ion-card-header (click)="showMenu(character)">
-      <ion-card-subtitle *ngIf="character.visible">
-        {{character.visible|date:'medium'}}
-        <app-new-badge [time]="character.visible" slot="end"></app-new-badge>
-      </ion-card-subtitle>
-      <ion-card-subtitle *ngIf="!character.visible">
-        Hidden
-      </ion-card-subtitle>
-      <ion-card-title>
-        {{character.name}}
-      </ion-card-title>
-    </ion-card-header>
-    <ion-card-content *ngIf="character.description" (click)="showMenu(character)">
-      <markdown [data]="character.description"></markdown>
-    </ion-card-content>
-    <ion-list *ngIf="hasItems" lines="full" lines="none">
-      <ion-list-header>
-        <ion-label>KEYPOINTS</ion-label>
-      </ion-list-header>
-      <ng-container *ngFor="let item of character.items">
-        <ion-item *ngIf="item.visible || isMaster">
-          <ion-icon name="checkmark-circle-outline" style="margin-right:1rem" slot="start"></ion-icon>
-          {{item.content}}
-          <app-new-badge  *ngIf="!isMaster" [time]="item.visible" slot="end"></app-new-badge>
-          <ion-button *ngIf="!item.visible && isMaster" color="primary" fill="outline" size="small" slot="end"
-            click-stop-propagation (click)="showItem(item)">
-            Show</ion-button>
-          <ion-button *ngIf="item.visible && isMaster" color="danger" fill="outline" size="small" slot="end"
-            click-stop-propagation (click)="hideItem(item)">
-            Hide
-          </ion-button>
-        </ion-item>
-      </ng-container>
-    </ion-list>
-  </ion-card>
+  <ion-card-header (click)="showMenu(character)">
+    <ion-card-subtitle *ngIf="character.visible">
+      {{character.visible|date:'medium'}}
+      <app-new-badge [time]="character.visible" slot="end"></app-new-badge>
+    </ion-card-subtitle>
+    <ion-card-subtitle *ngIf="!character.visible">
+      Hidden
+    </ion-card-subtitle>
+    <ion-card-title>
+      {{character.name}}
+    </ion-card-title>
+  </ion-card-header>
+  <ion-card-content *ngIf="character.description" (click)="showMenu(character)">
+    <markdown [data]="character.description"></markdown>
+  </ion-card-content>
+  <ion-list *ngIf="hasItems" lines="full" lines="none">
+    <ion-list-header>
+      <ion-label>KEYPOINTS</ion-label>
+    </ion-list-header>
+    <ng-container *ngFor="let item of character.items">
+      <ion-item *ngIf="item.visible || isMaster">
+        <ion-icon name="checkmark-circle-outline" style="margin-right:1rem" slot="start"></ion-icon>
+        {{item.content}}
+        <app-new-badge *ngIf="!isMaster" [time]="item.visible" slot="end"></app-new-badge>
+        <ion-button *ngIf="!item.visible && isMaster" color="primary" fill="outline" size="small" slot="end"
+          click-stop-propagation (click)="showItem(item)">
+          Show</ion-button>
+        <ion-button *ngIf="item.visible && isMaster" color="danger" fill="outline" size="small" slot="end"
+          click-stop-propagation (click)="hideItem(item)">
+          Hide
+        </ion-button>
+      </ion-item>
+    </ng-container>
+  </ion-list>
+</ion-card>

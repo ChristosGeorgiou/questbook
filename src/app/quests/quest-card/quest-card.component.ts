@@ -73,6 +73,7 @@ export class QuestCardComponent {
     });
 
     modal.onDidDismiss().then(async (res) => {
+      if (!res.data) { return; }
       const newq: Quest & Referable = res.data;
       await this.db.update(this.quest.ref, newq);
     });

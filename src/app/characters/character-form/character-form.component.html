@@ -6,19 +6,27 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <img [src]="character.portrait || '/assets/character.png'" alt="portrait">
+        <ion-input type="file" [(ngModel)]="character.portrait"></ion-input>
+      </ion-col>
+      <ion-col>
+        <ion-list lines="full">
+          <ion-item>
+            <ion-label position="stacked">Name</ion-label>
+            <ion-input [(ngModel)]="character.name"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Description</ion-label>
+            <ion-textarea [(ngModel)]="character.description" rows="6"></ion-textarea>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
   <ion-list lines="full">
-    <ion-item>
-      <ion-label position="stacked">Name</ion-label>
-      <ion-input [(ngModel)]="character.name"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="stacked">Portait</ion-label>
-      <ion-input [(ngModel)]="character.portrait"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="stacked">Description</ion-label>
-      <ion-textarea [(ngModel)]="character.description" rows="6"></ion-textarea>
-    </ion-item>
     <ion-item>
       <ion-label>Keypoints</ion-label>
       <ion-button color="success" fill="outline" size="small" slot="end" (click)="addItem()">

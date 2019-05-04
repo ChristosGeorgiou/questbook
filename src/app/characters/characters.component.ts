@@ -28,7 +28,18 @@ export class CharactersComponent implements OnInit {
       .pipe(
         tap(characters => characters.sort((a, b) => {
           return b.visible - a.visible;
-        }))
+        })),
+        // tap(async characters => {
+        //   const modal = await this.modalCtrl.create({
+        //     component: CharacterFormComponent,
+        //     componentProps: {
+        //       character: characters[0]
+        //     }
+        //   });
+
+        //   await modal.present();
+        //   return characters;
+        // })
       );
   }
 
