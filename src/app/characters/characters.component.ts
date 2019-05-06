@@ -1,9 +1,9 @@
 import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { DatabaseService } from '../_shared/services/database.service';
-import { Character, DocType, Referable } from '../_shared/services/models.all';
+import { BaseModel, Character, CharacterData, DocType } from '../_shared/services/models.all';
 import { StateService } from '../_shared/services/state.service';
 import { CharacterFormComponent } from './character-form/character-form.component';
 
@@ -12,7 +12,7 @@ import { CharacterFormComponent } from './character-form/character-form.componen
   templateUrl: './characters.component.html',
 })
 export class CharactersComponent implements OnInit {
-  characters$: Observable<(Character & Referable)[]>;
+  characters$: Observable<(Character)[]>;
   campaign$: any;
 
   constructor(
@@ -24,15 +24,18 @@ export class CharactersComponent implements OnInit {
   async ngOnInit() {
     this.campaign$ = this.state.campaign$;
     this.characters$ = this.db
-      .get<Character>(DocType.character)
+      .get<CharacterData>(DocType.character)
       .pipe(
         tap(characters => characters.sort((a, b) => {
           return b.visible - a.visible;
         })),
+        map(characters => {
+          return characters as Character[];
+        })
       );
   }
 
-  getRef(i, q: Referable) {
+  getRef(i, q: BaseModel) {
     return q.ref;
   }
 
@@ -50,11 +53,17 @@ export class CharactersComponent implements OnInit {
     });
 
     modal.onDidDismiss().then(async (res) => {
-      const newq: Character & Referable = res.data;
-
-      const ref = await this.db.add<Character>(DocType.character, newq);
-      if (res.data.portrait && res.data.portrait.indexOf('data:') > 0) {
-        await this.db.upsertFile(ref, 'portrait', res.data.portrait, 'image/jpeg');
+      const c: Character = res.data.character;
+      const doc = await this.db.add<CharacterData>(DocType.character, {
+        name: c.name,
+        description: c.description,
+        visible: null,
+        items: c.items
+      });
+      console.log('c', c);
+      if (res.data.portrait) {
+        console.log('upload file', doc.get('_id'));
+        await this.db.upsertFile(doc.get('_id'), 'portrait', res.data.portrait, 'image/jpeg');
       }
     });
 

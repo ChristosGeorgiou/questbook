@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { LocalStorage } from 'ngx-store';
 import { BehaviorSubject } from 'rxjs';
-import { Campaign, Preferences as CampaignPrefs, Preferences } from './models.all';
+import { CampaignData, Preferences as CampaignPrefs, Preferences } from './models.all';
 
 @Injectable()
 export class StateService {
@@ -11,7 +11,7 @@ export class StateService {
   @LocalStorage() last = '';
   @LocalStorage() campaigns: { [key: string]: CampaignPrefs } = {};
 
-  campaign$: BehaviorSubject<Campaign & Preferences> = new BehaviorSubject<Campaign & Preferences>(null);
+  campaign$: BehaviorSubject<CampaignData & Preferences> = new BehaviorSubject<CampaignData & Preferences>(null);
   active$: BehaviorSubject<string> = new BehaviorSubject<string>(null);
 
   loadCampaign(campaign: string) {
@@ -41,7 +41,7 @@ export class StateService {
     this.campaign$.next(_campaign);
   }
 
-  private _load(campaign): Campaign & Preferences {
+  private _load(campaign): CampaignData & Preferences {
     const _campaign = {
       title: campaign
     };

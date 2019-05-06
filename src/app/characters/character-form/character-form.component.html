@@ -9,7 +9,7 @@
   <ion-grid>
     <ion-row>
       <ion-col>
-        <img [src]="preview" alt="portrait">
+        <ion-img [src]="preview"></ion-img>
         <ion-input type="file" accept="image/*" (change)="loadFile($event)"></ion-input>
       </ion-col>
       <ion-col>

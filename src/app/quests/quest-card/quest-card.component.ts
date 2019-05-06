@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { ActionSheetController, AlertController, ModalController } from '@ionic/angular';
 import { DatabaseService } from '../../_shared/services/database.service';
-import { Quest, Referable } from '../../_shared/services/models.all';
+import { Quest, QuestData } from '../../_shared/services/models.all';
 import { StateService } from '../../_shared/services/state.service';
 import { QuestFormComponent } from '../quest-form/quest-form.component';
 
@@ -11,7 +11,7 @@ import { QuestFormComponent } from '../quest-form/quest-form.component';
 })
 export class QuestCardComponent {
 
-  @Input() quest: Quest & Referable;
+  @Input() quest: Quest;
 
   constructor(
     private state: StateService,
@@ -74,7 +74,7 @@ export class QuestCardComponent {
 
     modal.onDidDismiss().then(async (res) => {
       if (!res.data) { return; }
-      const newq: Quest & Referable = res.data;
+      const newq: QuestData = res.data;
       await this.db.update(this.quest.ref, newq);
     });
 

@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { ActionSheetController, AlertController, ModalController } from '@ionic/angular';
 import { DatabaseService } from '../../_shared/services/database.service';
-import { Character, Referable } from '../../_shared/services/models.all';
+import { Character } from '../../_shared/services/models.all';
 import { StateService } from '../../_shared/services/state.service';
 import { CharacterFormComponent } from '../character-form/character-form.component';
 
@@ -11,7 +11,7 @@ import { CharacterFormComponent } from '../character-form/character-form.compone
 })
 export class CharacterCardComponent {
 
-  @Input() character: Character & Referable;
+  @Input() character: Character;
 
   constructor(
     private state: StateService,
@@ -74,7 +74,7 @@ export class CharacterCardComponent {
 
     modal.onDidDismiss().then(async (res) => {
       if (!res.data) { return; }
-      const newq: Character & Referable = res.data;
+      const newq: CharacterData = res.data;
       await this.db.update(this.character.ref, newq);
     });
 

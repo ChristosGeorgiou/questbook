@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { Quest } from '../../_shared/services/models.all';
+import { Quest } from 'src/app/_shared/services/models.all';
 
 @Component({
   selector: 'app-quest-form',

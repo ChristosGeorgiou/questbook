@@ -7,47 +7,49 @@ export enum DocType {
   map,
 }
 
-export interface Data {
+export interface BaseModel {
+  files?: any;
+  ref?: string;
+}
+
+export interface BaseData {
   displayedAt?: number;
 }
 
-export interface Campaign extends Data {
+export interface CampaignData extends BaseData {
   title: string;
   owner?: string;
   description?: string;
   text?: string;
 }
 
-export interface Quest extends Data {
+export interface QuestData extends BaseData {
   subject?: string;
   description?: string;
   visible: number;
   items: {
-      content?: string,
-      visible: number
+    content?: string,
+    visible: number
   }[];
 }
-
-export interface Monster extends Data {
+export interface MonsterData extends BaseData {
   name: string;
   description: string;
   notes: string;
   thumb: string;
-  portrait: string;
 }
 
-export interface Character extends Data {
+export interface CharacterData extends BaseData {
   name: string;
   description: string;
-  portrait: string;
   visible: number;
   items: {
-      content?: string,
-      visible: number
+    content?: string,
+    visible: number
   }[];
 }
 
-export interface Item extends Data {
+export interface ItemData extends BaseData {
   name: string;
   description: string;
   notes: string;
@@ -62,7 +64,7 @@ export interface MapPOI {
   notes: string;
 }
 
-export interface Map extends Data {
+export interface MapData extends BaseData {
   label: string;
   description: string;
   notes: string;
@@ -73,12 +75,12 @@ export interface Map extends Data {
 }
 
 export type DocData =
-  Campaign |
-  Quest |
-  Monster |
-  Character |
-  Item |
-  Map;
+  CampaignData |
+  QuestData |
+  MonsterData |
+  CharacterData |
+  ItemData |
+  MapData;
 
 export interface Doc {
   _id?: string;
@@ -91,7 +93,9 @@ export interface Preferences {
   isMaster?: boolean;
 }
 
-export interface Referable {
-  files?: any;
-  ref?: string;
+export interface Character extends CharacterData, BaseModel {
+  portrait: string;
+}
+
+export interface Quest extends QuestData, BaseModel {
 }

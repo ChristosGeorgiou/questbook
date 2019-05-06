@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { Campaign, Preferences } from '../_shared/services/models.all';
+import { CampaignData, Preferences } from '../_shared/services/models.all';
 import { StateService } from '../_shared/services/state.service';
 
 @Component({
@@ -33,7 +33,7 @@ export class CampaignComponent implements OnInit {
     //   icon: 'map'
   }];
 
-  campaign$: Observable<Campaign & Preferences>;
+  campaign$: Observable<CampaignData & Preferences>;
 
   constructor(
     private state: StateService,

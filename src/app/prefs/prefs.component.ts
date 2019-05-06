@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Campaign, Preferences } from '../_shared/services/models.all';
+import { CampaignData, Preferences } from '../_shared/services/models.all';
 import { StateService } from '../_shared/services/state.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { StateService } from '../_shared/services/state.service';
   styleUrls: ['./prefs.component.scss'],
 })
 export class PrefsComponent implements OnInit {
-  campaign$: Observable<Campaign & Preferences>;
+  campaign$: Observable<CampaignData & Preferences>;
 
   constructor(
     private state: StateService,

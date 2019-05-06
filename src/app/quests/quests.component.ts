@@ -3,7 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { DatabaseService } from '../_shared/services/database.service';
-import { DocType, Quest, Referable } from '../_shared/services/models.all';
+import { BaseModel, DocType, Quest, QuestData } from '../_shared/services/models.all';
 import { StateService } from '../_shared/services/state.service';
 import { QuestFormComponent } from './quest-form/quest-form.component';
 
@@ -12,7 +12,7 @@ import { QuestFormComponent } from './quest-form/quest-form.component';
   templateUrl: './quests.component.html',
 })
 export class QuestsComponent implements OnInit {
-  quests$: Observable<(Quest & Referable)[]>;
+  quests$: Observable<Quest[]>;
   campaign$: any;
 
   constructor(
@@ -24,7 +24,7 @@ export class QuestsComponent implements OnInit {
   async ngOnInit() {
     this.campaign$ = this.state.campaign$;
     this.quests$ = this.db
-      .get<Quest>(DocType.quest)
+      .get<QuestData>(DocType.quest)
       .pipe(
         tap(quests => quests.sort((a, b) => {
           return b.visible - a.visible;
@@ -32,7 +32,7 @@ export class QuestsComponent implements OnInit {
       );
   }
 
-  getRef(i, q: Referable) {
+  getRef(i, q: BaseModel) {
     return q.ref;
   }
 
@@ -50,8 +50,8 @@ export class QuestsComponent implements OnInit {
     });
 
     modal.onDidDismiss().then(async (res) => {
-      const newq: Quest & Referable = res.data;
-      await this.db.add<Quest>(DocType.quest, newq);
+      const newq: QuestData = res.data;
+      await this.db.add<QuestData>(DocType.quest, newq);
     });
 
     await modal.present();

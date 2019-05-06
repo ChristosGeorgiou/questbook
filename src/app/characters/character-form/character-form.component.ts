@@ -1,15 +1,16 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { Character, Referable } from '../../_shared/services/models.all';
+import { Character } from '../../_shared/services/models.all';
 
 @Component({
   selector: 'app-character-form',
   templateUrl: './character-form.component.html',
 })
 export class CharacterFormComponent implements OnInit {
-  @Input() character: Character & Referable;
+  @Input() character: Character;
 
   preview: string;
+  file: Blob;
 
   constructor(
     private modalCtrl: ModalController,
@@ -31,11 +32,14 @@ export class CharacterFormComponent implements OnInit {
 
   async save() {
     this.character.items = this.character.items.filter(i => i.content);
-    this.modalCtrl.dismiss(this.character);
+    this.modalCtrl.dismiss({
+      character: this.character,
+      portrait: this.file,
+    });
   }
 
   loadFile($event): void {
-    const file = $event.target.files[0];
+    this.file = $event.target.files[0];
     const reader: FileReader = new FileReader();
     reader.onloadend = (e) => {
       const img = new Image();
@@ -43,6 +47,6 @@ export class CharacterFormComponent implements OnInit {
       img.src = src;
       this.preview = this.character.portrait = src;
     };
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(this.file);
   }
 }
