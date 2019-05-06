@@ -92,5 +92,6 @@ export interface Preferences {
 }
 
 export interface Referable {
+  files?: any;
   ref?: string;
 }

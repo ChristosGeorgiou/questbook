@@ -9,8 +9,8 @@
   <ion-grid>
     <ion-row>
       <ion-col>
-        <img [src]="character.portrait || '/assets/character.png'" alt="portrait">
-        <ion-input type="file" [(ngModel)]="character.portrait"></ion-input>
+        <img [src]="preview" alt="portrait">
+        <ion-input type="file" accept="image/*" (change)="loadFile($event)"></ion-input>
       </ion-col>
       <ion-col>
         <ion-list lines="full">

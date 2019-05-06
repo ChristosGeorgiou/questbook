@@ -29,17 +29,6 @@ export class CharactersComponent implements OnInit {
         tap(characters => characters.sort((a, b) => {
           return b.visible - a.visible;
         })),
-        // tap(async characters => {
-        //   const modal = await this.modalCtrl.create({
-        //     component: CharacterFormComponent,
-        //     componentProps: {
-        //       character: characters[0]
-        //     }
-        //   });
-
-        //   await modal.present();
-        //   return characters;
-        // })
       );
   }
 
@@ -62,7 +51,11 @@ export class CharactersComponent implements OnInit {
 
     modal.onDidDismiss().then(async (res) => {
       const newq: Character & Referable = res.data;
-      await this.db.add<Character>(DocType.character, newq);
+
+      const ref = await this.db.add<Character>(DocType.character, newq);
+      if (res.data.portrait && res.data.portrait.indexOf('data:') > 0) {
+        await this.db.upsertFile(ref, 'portrait', res.data.portrait, 'image/jpeg');
+      }
     });
 
     await modal.present();

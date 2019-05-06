@@ -2,6 +2,7 @@ import { Injectable, NgZone } from '@angular/core';
 import * as AdapterHttp from 'pouchdb-adapter-http';
 import * as AdapterIDB from 'pouchdb-adapter-idb';
 import { RxCollection, RxDocument } from 'rxdb';
+import AttachmentsPlugin from 'rxdb/plugins/attachments';
 import RxDB from 'rxdb/plugins/core';
 import EncryptionPlugin from 'rxdb/plugins/encryption';
 import LeaderelectionPlugin from 'rxdb/plugins/leader-election';
@@ -15,6 +16,7 @@ import schema from '../schemas/item.schema.json';
 import { Doc, DocType, Referable } from './models.all';
 import { StateService } from './state.service';
 
+RxDB.plugin(AttachmentsPlugin);
 RxDB.plugin(ValidatePlugin);
 RxDB.plugin(UpdatePlugin);
 RxDB.plugin(ReplicationPlugin);
@@ -58,7 +60,7 @@ export class DatabaseService {
       type: type,
       data: item
     };
-    await this.collections[this.state.last].insert(doc);
+    return this.collections[this.state.last].insert(doc);
   }
 
   async update(ref: string, data: any) {
@@ -68,6 +70,16 @@ export class DatabaseService {
         data
       }
     });
+  }
+
+  async upsertFile(ref: string, id: string, data: any, type: string) {
+    const q: RxDocument<Doc> = await this.collections[this.state.last].findOne(ref).exec();
+    await q.putAttachment({
+      id: id,
+      data: data,
+      type: type
+    });
+
   }
 
   async remove(ref: any) {
@@ -99,7 +111,8 @@ export class DatabaseService {
       name: campaign,
       schema: schema,
       migrationStrategies: {
-        1: (oldDoc) => oldDoc
+        1: (oldDoc) => oldDoc,
+        2: (oldDoc) => oldDoc,
       }
     });
 
@@ -112,17 +125,29 @@ export class DatabaseService {
 
   private async _loadSets(campaign: string) {
     Object.keys(DocType).forEach(async (t) => {
-      const items: Doc[] = await this.collections[campaign].find().where('type').eq(DocType[t]).exec();
+      const items: RxDocument<Doc>[] = await this.collections[campaign].find().where('type').eq(DocType[t]).exec();
+
       const mappedItems = items
         .filter(i => i.data)
-        .map(i => {
+        .map((i) => {
           const q = i.data as Referable;
           q.ref = i._id;
+          this.loadFiles(q, i);
           return q;
         });
+
       this.zone.run(() => {
         this.sets$[t].next(mappedItems);
       });
+    });
+  }
+
+  async loadFiles(data: Referable, doc: RxDocument<any>) {
+    const files = {};
+    if (!doc['_attachments']) { return files; }
+    const attachments = await doc.allAttachments();
+    attachments.forEach(async (attachment) => {
+      data[attachment.id] = await attachment.getStringData();
     });
   }
 }
