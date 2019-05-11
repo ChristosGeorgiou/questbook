@@ -1,32 +1,32 @@
 <ion-header>
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-      <ion-title>Characters</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-content>
-    <div class="boxed">
-      <ng-container *ngIf="(characters$ | async) as characters; else loading">
-        <ng-container *ngIf="(characters | visible).length; else empty">
-          <ng-container *ngFor="let character of characters | visible; trackBy: getRef">
-            <app-character-card [character]="character"></app-character-card>
-          </ng-container>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Characters</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="boxed">
+    <ng-container *ngIf="(characters$ | async) as characters; else loading">
+      <ng-container *ngIf="(characters | visible).length; else empty">
+        <ng-container *ngFor="let character of characters | visible">
+          <app-character-card [character]="character"></app-character-card>
         </ng-container>
       </ng-container>
-    </div>
-  
-    <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="(campaign$|async)?.isMaster">
-      <ion-fab-button (click)="create()">
-        <ion-icon name="add"></ion-icon>
-      </ion-fab-button>
-    </ion-fab>
-  </ion-content>
-  
-  <ng-template #loading>
-    <div class="empty">loading characters...</div>
-  </ng-template>
-  <ng-template #empty>
-    <div class="empty">No characters were found</div>
-  </ng-template>
+    </ng-container>
+  </div>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="(campaign$|async)?.isMaster">
+    <ion-fab-button (click)="create()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
+
+<ng-template #loading>
+  <div class="empty">loading characters...</div>
+</ng-template>
+<ng-template #empty>
+  <div class="empty">No characters were found</div>
+</ng-template>

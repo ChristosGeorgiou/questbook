@@ -1,23 +1,20 @@
 {
   "title": "item",
-  "version": 2,
+  "version": 0,
   "type": "object",
   "disableKeyCompression": true,
   "properties": {
-    "ts": {
+    "type": {
       "type": "number"
     },
-    "type": {
+    "created": {
+      "type": "number"
+    },
+    "visible": {
       "type": "number"
     },
     "data": {
       "type": "object"
-    },
-    "campaign": {
-      "type": "string"
-    },
-    "show": {
-      "type": "boolean"
     }
   },
   "attachments": {

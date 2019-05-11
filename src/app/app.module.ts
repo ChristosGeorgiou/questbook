@@ -17,12 +17,13 @@ import { HomeComponent } from './home/home.component';
 import { PrefsComponent } from './prefs/prefs.component';
 import { QuestCardComponent } from './quests/quest-card/quest-card.component';
 import { QuestFormComponent } from './quests/quest-form/quest-form.component';
-import { QuestsComponent, VisiblePipe } from './quests/quests.component';
+import { QuestsComponent } from './quests/quests.component';
 import { SearchComponent } from './search/search.component';
 import { FooterComponent } from './_shared/components/footer/footer.component';
 import { ClickStopPropagation } from './_shared/directives/click-stop-propagation.directive';
 import { NewBadgeComponent } from './_shared/new-badge/new-badge.component';
 import { HighlightPipe } from './_shared/pipes/highlight.pipe';
+import { VisiblePipe } from './_shared/pipes/visible.pipe';
 import { DatabaseService } from './_shared/services/database.service';
 import { StateService } from './_shared/services/state.service';
 

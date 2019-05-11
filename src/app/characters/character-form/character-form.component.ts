@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { DatabaseService } from 'src/app/_shared/services/database.service';
-import { Character, CharacterData, Doc, DocType } from '../../_shared/services/models.all';
+import { CampaignDocType, CharacterData } from '../../_shared/services/models.all';
 
 @Component({
   selector: 'app-character-form',
@@ -12,9 +12,9 @@ export class CharacterFormComponent implements OnInit {
 
   portrait = '/assets/character.png';
   newPortrait = false;
-  doc: Doc;
-  character: Character = {
-    items: []
+
+  character: CharacterData = {
+    items: [{}]
   };
   file: Blob;
 
@@ -25,10 +25,10 @@ export class CharacterFormComponent implements OnInit {
 
   async ngOnInit() {
     if (this.characterId) {
-      this.doc = await this.db.getOne(this.characterId);
-      this.character = this.doc.data as Character;
-      await this.db.loadFiles(this.character, this.doc);
-      this.portrait = this.character.portrait;
+      const doc = await this.db.getOne(this.characterId);
+      await this.db.loadFiles(doc);
+      this.character = doc.data;
+      this.portrait = doc.files.portrait;
     }
   }
 
@@ -47,8 +47,7 @@ export class CharacterFormComponent implements OnInit {
     if (this.characterId) {
       await this.db.update(this.characterId, this.character);
     } else {
-      const doc = await this.db.add<CharacterData>(DocType.character, this.character);
-      this.characterId = doc.get('_id');
+      this.characterId = await this.db.add(CampaignDocType.character, this.character);
     }
 
     if (this.newPortrait) {

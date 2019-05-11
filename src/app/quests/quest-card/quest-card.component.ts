@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { ActionSheetController, AlertController, ModalController } from '@ionic/angular';
 import { DatabaseService } from '../../_shared/services/database.service';
-import { Quest, QuestData } from '../../_shared/services/models.all';
+import { Quest } from '../../_shared/services/models.all';
 import { StateService } from '../../_shared/services/state.service';
 import { QuestFormComponent } from '../quest-form/quest-form.component';
 
@@ -11,6 +11,7 @@ import { QuestFormComponent } from '../quest-form/quest-form.component';
 })
 export class QuestCardComponent {
 
+  @Input() id: string;
   @Input() quest: Quest;
 
   constructor(
@@ -26,7 +27,9 @@ export class QuestCardComponent {
   }
 
   get hasItems() {
-    return this.quest.items.findIndex(i => i.visible !== null || this.isMaster) !== -1;
+    if (this.quest.items) {
+      return this.quest.items.findIndex(i => i.visible !== null || this.isMaster) !== -1;
+    }
   }
 
   async showItem(item) {
@@ -34,12 +37,12 @@ export class QuestCardComponent {
       this.quest.visible = Date.now();
     }
     item.visible = Date.now();
-    await this.db.update(this.quest.ref, this.quest);
+    await this.update();
   }
 
   async hideItem(item) {
     item.visible = null;
-    await this.db.update(this.quest.ref, this.quest);
+    await this.update();
   }
 
   async showMenu() {
@@ -58,28 +61,21 @@ export class QuestCardComponent {
 
   async show() {
     this.quest.visible = Date.now();
-    await this.db.update(this.quest.ref, this.quest);
+    await this.update();
   }
 
   async hide() {
     this.quest.visible = null;
-    await this.db.update(this.quest.ref, this.quest);
+    await this.update();
   }
 
   async edit() {
     const modal = await this.modalCtrl.create({
       component: QuestFormComponent,
       componentProps: {
-        quest: { ...this.quest }
+        questId: this.id
       }
     });
-
-    modal.onDidDismiss().then(async (res) => {
-      if (!res.data) { return; }
-      const newq: QuestData = res.data;
-      await this.db.update(this.quest.ref, newq);
-    });
-
     await modal.present();
   }
 
@@ -98,11 +94,15 @@ export class QuestCardComponent {
         {
           text: 'Remove',
           handler: async () => {
-            await this.db.remove(this.quest.ref);
+            await this.db.remove(this.id);
           }
         }
       ]
     });
     await alert.present();
+  }
+
+  private async update() {
+    await this.db.update(this.id, this.quest);
   }
 }

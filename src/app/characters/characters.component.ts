@@ -1,9 +1,9 @@
-import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { DatabaseService } from '../_shared/services/database.service';
-import { BaseModel, Character, CharacterData, DocType } from '../_shared/services/models.all';
+import { CampaignDocType, Character } from '../_shared/services/models.all';
 import { StateService } from '../_shared/services/state.service';
 import { CharacterFormComponent } from './character-form/character-form.component';
 
@@ -12,7 +12,7 @@ import { CharacterFormComponent } from './character-form/character-form.componen
   templateUrl: './characters.component.html',
 })
 export class CharactersComponent implements OnInit {
-  characters$: Observable<(Character)[]>;
+  characters$: Observable<Character[]>;
   campaign$: any;
 
   constructor(
@@ -23,20 +23,18 @@ export class CharactersComponent implements OnInit {
 
   async ngOnInit() {
     this.campaign$ = this.state.campaign$;
-    this.characters$ = this.db
-      .getCollection<CharacterData>(DocType.character)
+    this.characters$ = this.db.getCollection(CampaignDocType.character)
       .pipe(
-        tap(characters => characters.sort((a, b) => {
-          return b.visible - a.visible;
-        })),
-        map(characters => {
-          return characters as Character[];
+        map((docs) => {
+          return docs.map(doc => {
+            const character = Object.assign(doc.data, {
+              _id: doc._id,
+              portrait: doc.files.portrait
+            }) as Character;
+            return character;
+          });
         })
       );
-  }
-
-  getRef(i, q: BaseModel) {
-    return q.ref;
   }
 
   async create() {
@@ -44,21 +42,5 @@ export class CharactersComponent implements OnInit {
       component: CharacterFormComponent
     });
     await modal.present();
-  }
-}
-
-@Pipe({
-  name: 'visible',
-  pure: false
-})
-export class VisiblePipe implements PipeTransform {
-  constructor(private state: StateService) { }
-
-  transform(items: any[]): any {
-    if (!items) {
-      return items;
-    }
-
-    return items.filter(item => item.visible || this.state.campaign$.value.isMaster);
   }
 }

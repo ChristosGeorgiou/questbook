@@ -42,7 +42,7 @@ export class StateService {
   }
 
   private _load(campaign): CampaignData & Preferences {
-    const _campaign = {
+    const _campaign: CampaignData = {
       title: campaign
     };
     const _prefs = this.campaigns[campaign];

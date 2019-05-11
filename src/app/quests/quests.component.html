@@ -10,8 +10,8 @@
   <div class="boxed">
     <ng-container *ngIf="(quests$ | async) as quests; else loading">
       <ng-container *ngIf="(quests | visible).length; else empty">
-        <ng-container *ngFor="let quest of quests | visible; trackBy: getRef">
-          <app-quest-card [quest]="quest"></app-quest-card>
+        <ng-container *ngFor="let quest of quests | visible;">
+          <app-quest-card [id]="quest.id" [quest]="quest.data"></app-quest-card>
         </ng-container>
       </ng-container>
     </ng-container>

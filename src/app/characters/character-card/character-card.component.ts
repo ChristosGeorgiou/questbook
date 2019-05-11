@@ -36,12 +36,11 @@ export class CharacterCardComponent {
       this.character.visible = Date.now();
     }
     item.visible = Date.now();
-    await this.db.update(this.character.ref, this.character);
+    await this.update();
   }
 
   async hideItem(item) {
     item.visible = null;
-    await this.db.update(this.character.ref, this.character);
   }
 
   async showMenu() {
@@ -60,19 +59,19 @@ export class CharacterCardComponent {
 
   async show() {
     this.character.visible = Date.now();
-    await this.db.update(this.character.ref, this.character);
+    await this.update();
   }
 
   async hide() {
     this.character.visible = null;
-    await this.db.update(this.character.ref, this.character);
+    await this.update();
   }
 
   async edit() {
     const modal = await this.modalCtrl.create({
       component: CharacterFormComponent,
       componentProps: {
-        characterId: this.character.ref
+        characterId: this.character._id
       }
     });
     await modal.present();
@@ -93,11 +92,15 @@ export class CharacterCardComponent {
         {
           text: 'Remove',
           handler: async () => {
-            await this.db.remove(this.character.ref);
+            await this.db.remove(this.character._id);
           }
         }
       ]
     });
     await alert.present();
+  }
+
+  private async update() {
+    await this.db.update(this.character._id, this.character);
   }
 }
