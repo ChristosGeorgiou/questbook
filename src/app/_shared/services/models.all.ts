@@ -26,10 +26,10 @@ export interface CampaignData extends BaseData {
 export interface QuestData extends BaseData {
   subject?: string;
   description?: string;
-  visible: number;
+  visible?: number;
   items: {
     content?: string,
-    visible: number
+    visible?: number
   }[];
 }
 export interface MonsterData extends BaseData {
@@ -40,12 +40,12 @@ export interface MonsterData extends BaseData {
 }
 
 export interface CharacterData extends BaseData {
-  name: string;
-  description: string;
-  visible: number;
+  name?: string;
+  description?: string;
+  visible?: number;
   items: {
     content?: string,
-    visible: number
+    visible?: number
   }[];
 }
 
@@ -94,7 +94,7 @@ export interface Preferences {
 }
 
 export interface Character extends CharacterData, BaseModel {
-  portrait: string;
+  portrait?: string;
 }
 
 export interface Quest extends QuestData, BaseModel {

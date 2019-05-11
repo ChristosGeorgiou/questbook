@@ -1,5 +1,5 @@
 <ion-card>
-  <ion-img [src]="character.portrait || '/assets/character.png'"></ion-img>
+  <ion-img [src]="character.portrait || '/assets/character.png'" (click)="showMenu(character)"></ion-img>
   <ion-card-header (click)="showMenu(character)">
     <ion-card-subtitle *ngIf="character.visible">
       {{character.visible|date:'medium'}}
@@ -34,5 +34,4 @@
       </ion-item>
     </ng-container>
   </ion-list>
-  <!-- <pre>{{character|json:2}}</pre> -->
 </ion-card>

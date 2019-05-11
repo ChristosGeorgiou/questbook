@@ -26,7 +26,9 @@ export class CharacterCardComponent {
   }
 
   get hasItems() {
-    return this.character.items.findIndex(i => i.visible !== null || this.isMaster) !== -1;
+    if (this.character.items) {
+      return this.character.items.findIndex(i => i.visible !== null || this.isMaster) !== -1;
+    }
   }
 
   async showItem(item) {
@@ -34,10 +36,12 @@ export class CharacterCardComponent {
       this.character.visible = Date.now();
     }
     item.visible = Date.now();
+    await this.db.update(this.character.ref, this.character);
   }
 
   async hideItem(item) {
     item.visible = null;
+    await this.db.update(this.character.ref, this.character);
   }
 
   async showMenu() {
@@ -68,16 +72,9 @@ export class CharacterCardComponent {
     const modal = await this.modalCtrl.create({
       component: CharacterFormComponent,
       componentProps: {
-        character: { ...this.character }
+        characterId: this.character.ref
       }
     });
-
-    modal.onDidDismiss().then(async (res) => {
-      if (!res.data) { return; }
-      const newq: CharacterData = res.data;
-      await this.db.update(this.character.ref, newq);
-    });
-
     await modal.present();
   }
 

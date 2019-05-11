@@ -11,10 +11,11 @@ import UpdatePlugin from 'rxdb/plugins/update';
 import ValidatePlugin from 'rxdb/plugins/validate';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { environment } from 'src/environments/environment.js';
+import { environment } from '../../../environments/environment';
 import schema from '../schemas/item.schema.json';
 import { BaseModel, Doc, DocType } from './models.all';
 import { StateService } from './state.service';
+
 
 RxDB.plugin(AttachmentsPlugin);
 RxDB.plugin(ValidatePlugin);
@@ -24,6 +25,8 @@ RxDB.plugin(LeaderelectionPlugin);
 RxDB.plugin(EncryptionPlugin);
 RxDB.plugin(AdapterIDB);
 RxDB.plugin(AdapterHttp);
+
+// PouchDB.debug.enable('*');
 
 @Injectable()
 export class DatabaseService {
@@ -45,13 +48,17 @@ export class DatabaseService {
     });
   }
 
-  get<T>(quest: DocType) {
-    const source = this.sets$[DocType[quest]];
+  getCollection<T>(docType: DocType) {
+    const source = this.sets$[DocType[docType]];
     return source.pipe(
       map(i => {
         return i as T[];
       })
     );
+  }
+
+  getOne(id: string): Promise<Doc> {
+    return this.collections[this.state.last].findOne(id).exec();
   }
 
   async add<T>(type: DocType, item: T) {
@@ -148,7 +155,6 @@ export class DatabaseService {
     const attachments = await doc.allAttachments();
     for (let i = 0; i < attachments.length; i++) {
       data[attachments[i].id] = await this.getImageAttachment(attachments[i]);
-      console.log(data);
     }
   }
 

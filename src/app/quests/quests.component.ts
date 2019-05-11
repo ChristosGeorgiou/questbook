@@ -24,7 +24,7 @@ export class QuestsComponent implements OnInit {
   async ngOnInit() {
     this.campaign$ = this.state.campaign$;
     this.quests$ = this.db
-      .get<QuestData>(DocType.quest)
+      .getCollection<QuestData>(DocType.quest)
       .pipe(
         tap(quests => quests.sort((a, b) => {
           return b.visible - a.visible;

@@ -1,29 +1,39 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { Character } from '../../_shared/services/models.all';
+import { DatabaseService } from 'src/app/_shared/services/database.service';
+import { Character, CharacterData, Doc, DocType } from '../../_shared/services/models.all';
 
 @Component({
   selector: 'app-character-form',
   templateUrl: './character-form.component.html',
 })
 export class CharacterFormComponent implements OnInit {
-  @Input() character: Character;
+  @Input() characterId: string;
 
-  preview: string;
+  portrait = '/assets/character.png';
+  newPortrait = false;
+  doc: Doc;
+  character: Character = {
+    items: []
+  };
   file: Blob;
 
   constructor(
+    private db: DatabaseService,
     private modalCtrl: ModalController,
   ) { }
 
-  ngOnInit(): void {
-    this.preview = this.character.portrait || '/assets/character.png';
+  async ngOnInit() {
+    if (this.characterId) {
+      this.doc = await this.db.getOne(this.characterId);
+      this.character = this.doc.data as Character;
+      await this.db.loadFiles(this.character, this.doc);
+      this.portrait = this.character.portrait;
+    }
   }
 
   addItem() {
-    this.character.items.push({
-      visible: null
-    });
+    this.character.items.push({});
   }
 
   removeItem(index) {
@@ -31,11 +41,21 @@ export class CharacterFormComponent implements OnInit {
   }
 
   async save() {
-    this.character.items = this.character.items.filter(i => i.content);
-    this.modalCtrl.dismiss({
-      character: this.character,
-      portrait: this.file,
-    });
+    const items = this.character.items || [];
+    this.character.items = items.filter(i => i.content);
+
+    if (this.characterId) {
+      await this.db.update(this.characterId, this.character);
+    } else {
+      const doc = await this.db.add<CharacterData>(DocType.character, this.character);
+      this.characterId = doc.get('_id');
+    }
+
+    if (this.newPortrait) {
+      await this.db.upsertFile(this.characterId, 'portrait', this.file, 'image/jpeg');
+    }
+
+    this.modalCtrl.dismiss();
   }
 
   loadFile($event): void {
@@ -45,7 +65,8 @@ export class CharacterFormComponent implements OnInit {
       const img = new Image();
       const src = reader.result as string;
       img.src = src;
-      this.preview = this.character.portrait = src;
+      this.portrait = src;
+      this.newPortrait = true;
     };
     reader.readAsDataURL(this.file);
   }

@@ -1,4 +1,4 @@
-# Tabletop Companion
+# QuestBook
 
 ## General Features
 - session planner (calendar, votes etc)

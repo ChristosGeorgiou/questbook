@@ -34,10 +34,12 @@ export class QuestCardComponent {
       this.quest.visible = Date.now();
     }
     item.visible = Date.now();
+    await this.db.update(this.quest.ref, this.quest);
   }
 
   async hideItem(item) {
     item.visible = null;
+    await this.db.update(this.quest.ref, this.quest);
   }
 
   async showMenu() {
