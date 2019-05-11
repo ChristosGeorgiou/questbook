@@ -24,6 +24,6 @@ export class HomeComponent implements OnInit {
     this.navController.navigateForward('/campaign');
   }
 
-  create() {
+  create(name:string) {
   }
 }

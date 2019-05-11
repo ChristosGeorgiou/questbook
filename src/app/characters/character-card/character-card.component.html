@@ -1,6 +1,6 @@
 <ion-card>
-  <ion-img [src]="character.portrait || '/assets/character.png'" (click)="showMenu(character)"></ion-img>
-  <ion-card-header (click)="showMenu(character)">
+  <ion-img [src]="character.portrait || '/assets/character.png'" (click)="menu(character)"></ion-img>
+  <ion-card-header (click)="menu()">
     <ion-card-subtitle *ngIf="character.visible">
       {{character.visible|date:'medium'}}
       <app-new-badge [time]="character.visible" slot="end"></app-new-badge>
@@ -12,7 +12,7 @@
       {{character.name}}
     </ion-card-title>
   </ion-card-header>
-  <ion-card-content *ngIf="character.description" (click)="showMenu(character)">
+  <ion-card-content *ngIf="character.description" (click)="menu()">
     <markdown [data]="character.description"></markdown>
   </ion-card-content>
   <ion-list *ngIf="hasItems" lines="full" lines="none">

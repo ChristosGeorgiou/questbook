@@ -43,7 +43,7 @@ export class CharacterCardComponent {
     item.visible = null;
   }
 
-  async showMenu() {
+  async menu() {
     if (!this.state.campaign$.value.isMaster) { return; }
     const actionSheet = await this.actionSheetCtrl.create({
       buttons: [

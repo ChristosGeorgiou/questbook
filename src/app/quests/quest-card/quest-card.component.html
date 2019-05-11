@@ -1,5 +1,5 @@
 <ion-card>
-  <ion-card-header (click)="showMenu(quest)">
+  <ion-card-header (click)="menu()">
     <ion-card-subtitle *ngIf="quest.visible">
       {{quest.visible|date:'medium'}}
       <app-new-badge [time]="quest.visible" slot="end"></app-new-badge>
@@ -11,7 +11,7 @@
       {{quest.subject}}
     </ion-card-title>
   </ion-card-header>
-  <ion-card-content *ngIf="quest.description" (click)="showMenu(quest)">
+  <ion-card-content *ngIf="quest.description" (click)="menu()">
     <markdown [data]="quest.description"></markdown>
   </ion-card-content>
   <ion-list *ngIf="hasItems" lines="full" lines="none">
