@@ -26,22 +26,12 @@ export class CharacterCardComponent {
     return this.state.campaign$.value.isMaster;
   }
 
-  get hasItems() {
-    if (this.character.items) {
-      return this.character.items.findIndex(i => i.visible !== null || this.isMaster) !== -1;
-    }
-  }
-
-  async showItem(item) {
-    if (!this.character.visible) {
+  async toogleItem(item) {
+    if (!this.character.visible || !item.visible) {
       this.character.visible = Date.now();
     }
-    item.visible = Date.now();
+    item.visible = item.visible ? null : Date.now();
     await this.update();
-  }
-
-  async hideItem(item) {
-    item.visible = null;
   }
 
   async menu() {
@@ -51,7 +41,7 @@ export class CharacterCardComponent {
         { text: 'Show', icon: 'eye', handler: () => { this.show(); } },
         { text: 'Hide', icon: 'eye-off', handler: () => { this.hide(); } },
         { text: 'Remove', icon: 'trash', handler: () => { this.remove(); } },
-        { text: 'Edit', icon: 'share', handler: () => { this.edit(); } },
+        { text: 'Edit', icon: 'create', handler: () => { this.edit(); } },
         { text: 'Cancel', icon: 'close', role: 'cancel' }
       ]
     });

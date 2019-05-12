@@ -128,7 +128,7 @@ export class DatabaseService {
 
     Object.keys(grouped).forEach((key) => {
       const is = grouped[key].sort((a, b) => {
-        return b.data.visible - a.data.visible;
+        return (b.data.visible || 0) - (a.data.visible || 0);
       });
       this.zone.run(() => {
         this.sets$[key].next(is);

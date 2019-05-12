@@ -14,20 +14,17 @@
   <ion-card-content *ngIf="quest.description" (click)="menu()">
     <markdown [data]="quest.description"></markdown>
   </ion-card-content>
-  <ion-list *ngIf="hasItems" lines="full" lines="none">
-    <ion-list-header>
-      <ion-label>KEYPOINTS</ion-label>
-    </ion-list-header>
+  <ion-list lines="full" lines="none">
     <ng-container *ngFor="let item of quest.items">
       <ion-item *ngIf="item.visible || isMaster">
         <ion-icon name="checkmark-circle-outline" style="margin-right:1rem" slot="start"></ion-icon>
         {{item.content}}
         <app-new-badge *ngIf="!isMaster" [time]="item.visible" slot="end"></app-new-badge>
         <ion-button *ngIf="!item.visible && isMaster" color="primary" fill="outline" size="small" slot="end"
-          click-stop-propagation (click)="showItem(item)">
+          click-stop-propagation (click)="toogleItem(item)">
           Show</ion-button>
         <ion-button *ngIf="item.visible && isMaster" color="danger" fill="outline" size="small" slot="end"
-          click-stop-propagation (click)="hideItem(item)">
+          click-stop-propagation (click)="toogleItem(item)">
           Hide
         </ion-button>
       </ion-item>

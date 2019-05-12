@@ -24,22 +24,11 @@ export class QuestCardComponent {
     return this.state.campaign$.value.isMaster;
   }
 
-  get hasItems() {
-    if (this.quest.items) {
-      return this.quest.items.findIndex(i => i.visible !== null || this.isMaster) !== -1;
-    }
-  }
-
-  async showItem(item) {
-    if (!this.quest.visible) {
+  async toogleItem(item) {
+    if (!this.quest.visible || !item.visible) {
       this.quest.visible = Date.now();
     }
-    item.visible = Date.now();
-    await this.update();
-  }
-
-  async hideItem(item) {
-    item.visible = null;
+    item.visible = item.visible ? null : Date.now();
     await this.update();
   }
 
@@ -50,7 +39,7 @@ export class QuestCardComponent {
         { text: 'Show', icon: 'eye', handler: () => { this.show(); } },
         { text: 'Hide', icon: 'eye-off', handler: () => { this.hide(); } },
         { text: 'Remove', icon: 'trash', handler: () => { this.remove(); } },
-        { text: 'Edit', icon: 'share', handler: () => { this.edit(); } },
+        { text: 'Edit', icon: 'create', handler: () => { this.edit(); } },
         { text: 'Cancel', icon: 'close', role: 'cancel' }
       ]
     });
