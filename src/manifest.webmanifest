@@ -1,8 +1,8 @@
 {
   "name": "QuestBook",
   "short_name": "QuestBook",
-  "theme_color": "#3880ff",
-  "background_color": "#ffffff",
+  "theme_color": "#D0021B",
+  "background_color": "#222222",
   "display": "standalone",
   "scope": "/",
   "start_url": "/",
