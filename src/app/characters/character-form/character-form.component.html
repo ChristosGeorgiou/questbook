@@ -16,11 +16,11 @@
         <ion-list lines="full">
           <ion-item>
             <ion-label position="stacked">Name</ion-label>
-            <ion-input [(ngModel)]="character.name"></ion-input>
+            <ion-input [(ngModel)]="data.name"></ion-input>
           </ion-item>
           <ion-item>
             <ion-label position="stacked">Description</ion-label>
-            <ion-textarea [(ngModel)]="character.description" rows="6"></ion-textarea>
+            <ion-textarea [(ngModel)]="data.description" rows="6"></ion-textarea>
           </ion-item>
         </ion-list>
       </ion-col>
@@ -32,7 +32,7 @@
       <ion-button color="success" fill="outline" size="small" slot="end" (click)="addItem()">
         + Add</ion-button>
     </ion-item>
-    <ng-container *ngFor="let item of character.items; let i = index">
+    <ng-container *ngFor="let item of data.items; let i = index">
       <ion-item>
         <ion-input [(ngModel)]="item.content" placeholder="keypoint"></ion-input>
         <ion-button color="danger" fill="outline" size="small" slot="end" (click)="removeItem(i)">
