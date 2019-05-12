@@ -69,4 +69,8 @@ export class CharacterFormComponent implements OnInit {
     };
     reader.readAsDataURL(this.file);
   }
+
+  async close() {
+    await this.modalCtrl.dismiss();
+  }
 }

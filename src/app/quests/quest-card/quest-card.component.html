@@ -20,7 +20,7 @@
         <ion-icon name="checkmark-circle-outline" style="margin-right:1rem" slot="start"></ion-icon>
         {{item.content}}
         <app-new-badge *ngIf="!isMaster" [time]="item.visible" slot="end"></app-new-badge>
-        <ion-button *ngIf="!item.visible && isMaster" color="primary" fill="outline" size="small" slot="end"
+        <ion-button *ngIf="!item.visible && isMaster" color="tertiary" fill="outline" size="small" slot="end"
           click-stop-propagation (click)="toogleItem(item)">
           Show</ion-button>
         <ion-button *ngIf="item.visible && isMaster" color="danger" fill="outline" size="small" slot="end"

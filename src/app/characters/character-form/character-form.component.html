@@ -1,8 +1,9 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Character</ion-title>
-    <ion-button slot="end" color="success" fill="outline" size="small" (click)="save()">
-      Save</ion-button>
+    <ion-button slot="end" fill="clear" (click)="close()">
+      <ion-icon name="close-circle-outline"></ion-icon>
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 <ion-content>
@@ -29,8 +30,9 @@
   <ion-list lines="full">
     <ion-item>
       <ion-label>Keypoints</ion-label>
-      <ion-button color="success" fill="outline" size="small" slot="end" (click)="addItem()">
-        + Add</ion-button>
+      <ion-button color="primary" size="small" slot="end" (click)="addItem()">
+        <ion-icon name="add"></ion-icon>
+      </ion-button>
     </ion-item>
     <ng-container *ngFor="let item of data.items; let i = index">
       <ion-item>
@@ -42,3 +44,7 @@
     </ng-container>
   </ion-list>
 </ion-content>
+<ion-footer>
+  <ion-button color="primary" expand="block" (click)="save()" [disabled]="!data.name && !data.description">Save
+  </ion-button>
+</ion-footer>

@@ -11,7 +11,7 @@ export class QuestFormComponent {
 
   @Input() questId: string;
 
-  quest: QuestData = {
+  data: QuestData = {
     items: [{}]
   };
 
@@ -23,28 +23,32 @@ export class QuestFormComponent {
   async ngOnInit() {
     if (this.questId) {
       const doc = await this.db.getOne(this.questId);
-      this.quest = doc.data;
+      this.data = doc.data;
     }
   }
 
   addItem() {
-    this.quest.items.push({
+    this.data.items.push({
       visible: null
     });
   }
 
   removeItem(index) {
-    this.quest.items.splice(index, 1);
+    this.data.items.splice(index, 1);
   }
 
   async save() {
-    const items = this.quest.items || [];
-    this.quest.items = items.filter(i => i.content);
+    const items = this.data.items || [];
+    this.data.items = items.filter(i => i.content);
     if (this.questId) {
-      await this.db.update(this.questId, this.quest);
+      await this.db.update(this.questId, this.data);
     } else {
-      this.questId = await this.db.add(CampaignDocType.quest, this.quest);
+      this.questId = await this.db.add(CampaignDocType.quest, this.data);
     }
-    this.modalCtrl.dismiss();
+    await this.modalCtrl.dismiss();
+  }
+
+  async close() {
+    await this.modalCtrl.dismiss();
   }
 }
