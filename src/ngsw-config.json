@@ -1,5 +1,17 @@
 {
   "index": "/index.html",
+  "dataGroups":
+  [
+    {
+      "name": "api",
+      "urls": ["db.cgeosoftc.com/"],
+      "cacheConfig": {
+        "maxSize": 0,
+        "maxAge": "0u",
+        "strategy": "freshness"
+      }
+    }
+  ],
   "assetGroups": [
     {
       "name": "app",
