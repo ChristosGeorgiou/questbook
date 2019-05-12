@@ -1,44 +1,48 @@
 <ion-content padding>
   <div style="max-width:500px; margin:0 auto">
-    <div style="text-align: center">
-      <img style="max-width: 200px; border-radius: 20px;" src="/assets/icons/icon-512x512.png" />
-      <h1>QuestBook</h1>
+    <div class="header">
+      <img src="/assets/icons/icon-512x512.png" />
+      <h1 class="logo-text">QuestBook</h1>
     </div>
-    <ion-list lines="full" *ngIf="campaigns">
-      <ion-item>
-        <h4>Open</h4>
-      </ion-item>
-      <ion-item *ngFor="let campaign of campaigns">
-        {{campaign}}
-        <ion-button slot="end" (click)="open(campaign)">Open</ion-button>
-      </ion-item>
-    </ion-list>
-
-    <ion-list lines="full">
-      <ion-item>
-        <div>
-          <h4>Join</h4>
-          <p>Ask your master for campaign name or join <strong>demo</strong></p>
-        </div>
-      </ion-item>
-      <ion-item>
-        <ion-input #join placeholder="Campaign name" (keyboard.enter)="open(join.value)"></ion-input>
-        <ion-button slot="end" (click)="open(join.value)">Join</ion-button>
-      </ion-item>
-    </ion-list>
-
-    <ion-list lines="full">
-      <ion-item>
-        <div>
-          <h4>Create</h4>
-          <p>Enter a friendly name for your campaign</p>
-        </div>
-      </ion-item>
-      <ion-item>
-        <ion-input #new placeholder="Campaign name" (keyboard.enter)="create(new.value)"></ion-input>
-        <ion-button slot="end" (click)="create(new.value)">Create</ion-button>
-      </ion-item>
-    </ion-list>
+    <ion-card>
+      <ion-list *ngIf="campaigns">
+        <ion-item>
+          <h4>Open a local campaign</h4>
+        </ion-item>
+        <ion-item *ngFor="let campaign of campaigns">
+          {{campaign}}
+          <ion-button slot="end" (click)="open(campaign)">Open</ion-button>
+        </ion-item>
+      </ion-list>
+    </ion-card>
+    <ion-card>
+      <ion-list>
+        <ion-item>
+          <div>
+            <h4>Join with campaign name or try <strong>demo</strong></h4>
+            <p></p>
+          </div>
+        </ion-item>
+        <ion-item>
+          <ion-input #join placeholder="Campaign name" (keyboard.enter)="open(join.value)"></ion-input>
+          <ion-button slot="end" (click)="open(join.value)">Join</ion-button>
+        </ion-item>
+      </ion-list>
+    </ion-card>
+    <!-- <ion-card>
+      <ion-list>
+        <ion-item>
+          <div>
+            <h4>Create a new campaign</h4>
+            <p>Enter a friendly name for your campaign</p>
+          </div>
+        </ion-item>
+        <ion-item>
+          <ion-input #new placeholder="Campaign name" (keyboard.enter)="create(new.value)"></ion-input>
+          <ion-button slot="end" (click)="create(new.value)">Create</ion-button>
+        </ion-item>
+      </ion-list>
+    </ion-card> -->
     <app-footer></app-footer>
   </div>
 </ion-content>

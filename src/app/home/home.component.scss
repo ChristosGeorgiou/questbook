@@ -1,0 +1,17 @@
+:host {
+    .header {
+        text-align: center;
+
+        img {
+            max-width: 200px;
+            border-radius: 20px;
+        }
+
+        h1 {
+            font-size: 4rem;
+            color: #222;
+            text-shadow: 2px 0px 0 #ba0118;
+            font-style: italic;
+        }
+    }
+}

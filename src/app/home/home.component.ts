@@ -5,6 +5,7 @@ import { StateService } from '../_shared/services/state.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
+  styleUrls: ['home.component.scss']
 })
 export class HomeComponent implements OnInit {
 
@@ -24,6 +25,6 @@ export class HomeComponent implements OnInit {
     this.navController.navigateForward('/campaign');
   }
 
-  create(name:string) {
+  create(name: string) {
   }
 }
