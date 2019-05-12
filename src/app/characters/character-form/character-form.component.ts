@@ -13,7 +13,7 @@ export class CharacterFormComponent implements OnInit {
   portrait = '/assets/character.png';
   newPortrait = false;
 
-  character: CharacterData = {
+  data: CharacterData = {
     items: [{}]
   };
   file: Blob;
@@ -27,27 +27,27 @@ export class CharacterFormComponent implements OnInit {
     if (this.characterId) {
       const doc = await this.db.getOne(this.characterId);
       await this.db.loadFiles(doc);
-      this.character = doc.data;
+      this.data = doc.data;
       this.portrait = doc.files.portrait;
     }
   }
 
   addItem() {
-    this.character.items.push({});
+    this.data.items.push({});
   }
 
   removeItem(index) {
-    this.character.items.splice(index, 1);
+    this.data.items.splice(index, 1);
   }
 
   async save() {
-    const items = this.character.items || [];
-    this.character.items = items.filter(i => i.content);
+    const items = this.data.items || [];
+    this.data.items = items.filter(i => i.content);
 
     if (this.characterId) {
-      await this.db.update(this.characterId, this.character);
+      await this.db.update(this.characterId, this.data);
     } else {
-      this.characterId = await this.db.add(CampaignDocType.character, this.character);
+      this.characterId = await this.db.add(CampaignDocType.character, this.data);
     }
 
     if (this.newPortrait) {

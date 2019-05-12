@@ -26,6 +26,8 @@ import { HighlightPipe } from './_shared/pipes/highlight.pipe';
 import { VisiblePipe } from './_shared/pipes/visible.pipe';
 import { DatabaseService } from './_shared/services/database.service';
 import { StateService } from './_shared/services/state.service';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -88,7 +90,8 @@ import { StateService } from './_shared/services/state.service';
         path: 'prefs',
         component: PrefsComponent
       }]
-    }])
+    }]),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     StatusBar,
