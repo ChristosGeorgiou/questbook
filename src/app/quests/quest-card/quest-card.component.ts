@@ -10,8 +10,6 @@ import { QuestFormComponent } from '../quest-form/quest-form.component';
   templateUrl: './quest-card.component.html',
 })
 export class QuestCardComponent {
-
-  @Input() id: string;
   @Input() quest: Quest;
 
   constructor(
@@ -73,7 +71,7 @@ export class QuestCardComponent {
     const modal = await this.modalCtrl.create({
       component: QuestFormComponent,
       componentProps: {
-        questId: this.id
+        questId: this.quest._id
       }
     });
     await modal.present();
@@ -94,7 +92,7 @@ export class QuestCardComponent {
         {
           text: 'Remove',
           handler: async () => {
-            await this.db.remove(this.id);
+            await this.db.remove(this.quest._id);
           }
         }
       ]
@@ -103,6 +101,6 @@ export class QuestCardComponent {
   }
 
   private async update() {
-    await this.db.update(this.id, this.quest);
+    await this.db.update(this.quest._id, this.quest);
   }
 }

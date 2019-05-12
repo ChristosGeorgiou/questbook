@@ -3,6 +3,6 @@ import { versions } from './versions';
 
 export const environment = {
   production: false,
-  database: 'http://localhost:5984/',
+  database: 'https://db.cgeosoft.com/',
   versions: versions
 };

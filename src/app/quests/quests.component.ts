@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { DatabaseService } from '../_shared/services/database.service';
-import { CampaignDoc, CampaignDocType } from '../_shared/services/models.all';
+import { CampaignDocType, Quest } from '../_shared/services/models.all';
 import { StateService } from '../_shared/services/state.service';
 import { QuestFormComponent } from './quest-form/quest-form.component';
 
@@ -11,7 +12,7 @@ import { QuestFormComponent } from './quest-form/quest-form.component';
   templateUrl: './quests.component.html',
 })
 export class QuestsComponent implements OnInit {
-  quests$: Observable<CampaignDoc[]>;
+  quests$: Observable<Quest[]>;
   campaign$: any;
 
   constructor(
@@ -22,7 +23,17 @@ export class QuestsComponent implements OnInit {
 
   async ngOnInit() {
     this.campaign$ = this.state.campaign$;
-    this.quests$ = this.db.getCollection(CampaignDocType.quest);
+    this.quests$ = this.db.getCollection(CampaignDocType.quest)
+      .pipe(
+        map((docs) => {
+          return docs.map(doc => {
+            const quest = Object.assign(doc.data, {
+              _id: doc._id,
+            }) as Quest;
+            return quest;
+          });
+        })
+      );
   }
 
   async create() {
