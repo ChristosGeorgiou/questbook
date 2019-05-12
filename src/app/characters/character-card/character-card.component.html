@@ -1,5 +1,7 @@
 <ion-card>
-  <ion-img [src]="character.portrait || '/assets/character.png'" (click)="menu()"></ion-img>
+  <div class="character-portrait"
+    [ngStyle]="{'background-image' : 'url(' + character.portrait || '/assets/character.png' +')'}" (click)="menu()">
+  </div>
   <ion-card-header (click)="menu()">
     <ion-card-subtitle *ngIf="character.visible">
       {{character.visible|date:'medium'}}
