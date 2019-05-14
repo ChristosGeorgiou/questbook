@@ -17,9 +17,17 @@ ion-content {
   }
 }
 
-.empty{
+.empty {
   padding: 2rem;
   font-size: 1.2rem;
   text-align: center;
   color: #666;
+}
+
+ion-card {
+  border-radius: 15px 0 15px 0 !important;
+  border-top: solid 3px var(--ion-color-secondary-tint);
+  border-left: solid 3px var(--ion-color-secondary-tint);
+  border-bottom: solid 3px var(--ion-color-secondary-shade);
+  border-right: solid 3px var(--ion-color-secondary-shade);
 }
