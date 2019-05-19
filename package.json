@@ -7,16 +7,20 @@
     "url": "https://github.com/christosgeorgiou/questbook"
   },
   "scripts": {
+    "start": "run-p start:**",
+    "start:app": "ng serve --port 8100",
+    "start:lambda": "netlify-lambda serve src/lambda --port 8101 --config webpack.config.temp.js",
+    "build": "run-p build:**",
+    "build:app": "ng build",
+    "build:lambda": "netlify-lambda build src/lambda",
+    "build-prod": "run-p build:**",
+    "build-prod:app": "ng build --prod",
+    "build-prod:lambda": "netlify-lambda build src/lambda",
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "build:prod": "ng run app:build:production",
-    "prebuild:prod": "ts-node -O \"{\\\"module\\\": \\\"commonjs\\\"}\" git.version.ts",
+    "prebuild-prod": "ts-node -O \"{\\\"module\\\": \\\"commonjs\\\"}\" git.version.ts",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e",
-    "netlify-build": "netlify-lambda build src/lambda",
-    "netlify-serve": "netlify-lambda serve src/lambda --port 8101 --config webpack.config.temp.js"
+    "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {
@@ -62,6 +66,7 @@
     "ngx-markdown": "^7.1.5",
     "ngx-markdown-editor": "^1.2.0",
     "ngx-store": "^2.1.0",
+    "npm-run-all": "^4.1.5",
     "pouchdb-adapter-http": "^7.0.0",
     "pouchdb-adapter-idb": "^7.0.0",
     "pouchdb-debug": "^7.0.0",
