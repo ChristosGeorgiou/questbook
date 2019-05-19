@@ -1,13 +1,13 @@
 [build]
-  base = "/"
+  base = ""
   publish = "www"
-  command = "ionic build --prod"
+  command = "npm run build:prod"
   functions = ".lambda"
-[[redirects]]
-  from = "/.netlify/*"
-  status = 200
-  to = "/.netlify/:splat"
-[[redirects]]
-  from = "/*"
-  status = 200
-  to = "/index.html"
+# [[redirects]]
+#   from = "/.netlify/*"
+#   status = 200
+#   to = "/.netlify/:splat"
+# [[redirects]]
+#   from = "/*"
+#   status = 200
+#   to = "/index.html"
