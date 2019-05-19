@@ -2,7 +2,7 @@
   "index": "/index.html",
   "dataGroups": [
     {
-      "name": "api",
+      "name": "db",
       "urls": [
         "https://db.cgeosoftc.com/**/*"
       ],

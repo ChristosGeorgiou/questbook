@@ -13,7 +13,7 @@
     "build": "run-p build:**",
     "build:app": "ng build",
     "build:lambda": "netlify-lambda build src/lambda",
-    "build-prod": "run-p build:**",
+    "build-prod": "run-p build-prod:**",
     "build-prod:app": "ng build --prod",
     "build-prod:lambda": "netlify-lambda build src/lambda",
     "ng": "ng",
