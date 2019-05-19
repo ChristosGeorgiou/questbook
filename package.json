@@ -14,7 +14,9 @@
     "prebuild:prod": "ts-node -O \"{\\\"module\\\": \\\"commonjs\\\"}\" git.version.ts",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "netlify-build": "netlify-lambda build src/lambda",
+    "netlify-serve": "netlify-lambda serve src/lambda --port 8101 --config webpack.config.temp.js"
   },
   "private": true,
   "dependencies": {
@@ -55,6 +57,7 @@
     "karma-coverage-istanbul-reporter": "~2.0.1",
     "karma-jasmine": "~2.0.1",
     "karma-jasmine-html-reporter": "^1.4.2",
+    "netlify-lambda": "^1.4.10",
     "ngx-markdown": "^7.1.5",
     "ngx-markdown-editor": "^1.2.0",
     "ngx-store": "^2.1.0",
