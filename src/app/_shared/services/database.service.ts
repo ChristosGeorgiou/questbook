@@ -108,7 +108,7 @@ export class DatabaseService {
 
     // sync
     console.log('DatabaseService: sync');
-    db[campaign].sync({ remote: environment.database + campaign + '/' });
+    db[campaign].sync({ remote: environment.database + '/' + campaign + '/' });
 
     return db[campaign];
   }

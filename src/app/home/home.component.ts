@@ -1,5 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { environment } from '../../environments/environment';
 import { StateService } from '../_shared/services/state.service';
 
 @Component({
@@ -13,7 +15,8 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private state: StateService,
-    private navController: NavController
+    private navController: NavController,
+    private http: HttpClient
   ) { }
 
   ngOnInit() {
@@ -25,6 +28,7 @@ export class HomeComponent implements OnInit {
     this.navController.navigateForward('/campaign');
   }
 
-  create(name: string) {
+  create() {
+    return this.http.post(`${environment.funcs}/create-campaign`, {}).toPromise();
   }
 }

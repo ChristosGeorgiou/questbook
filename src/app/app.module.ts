@@ -1,12 +1,15 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy, RouterModule } from '@angular/router';
+import { ServiceWorkerModule } from '@angular/service-worker';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { MarkdownModule } from 'ngx-markdown';
 import { WebStorageModule } from 'ngx-store';
+import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { CampaignComponent } from './campaign/campaign.component';
 import { CharacterCardComponent } from './characters/character-card/character-card.component';
@@ -26,8 +29,7 @@ import { HighlightPipe } from './_shared/pipes/highlight.pipe';
 import { VisiblePipe } from './_shared/pipes/visible.pipe';
 import { DatabaseService } from './_shared/services/database.service';
 import { StateService } from './_shared/services/state.service';
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
+
 
 @NgModule({
   declarations: [
@@ -58,6 +60,7 @@ import { environment } from '../environments/environment';
     BrowserModule,
     FormsModule,
     WebStorageModule,
+    HttpClientModule,
     MarkdownModule.forRoot(),
     IonicModule.forRoot(),
     RouterModule.forRoot([{

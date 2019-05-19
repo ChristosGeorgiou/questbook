@@ -28,7 +28,7 @@
         </ion-item>
       </ion-list>
     </ion-card>
-    <!-- <ion-card>
+    <ion-card>
       <ion-list>
         <ion-item>
           <div>
@@ -37,11 +37,11 @@
           </div>
         </ion-item>
         <ion-item>
-          <ion-input #new placeholder="Campaign name" (keyboard.enter)="create(new.value)"></ion-input>
-          <ion-button slot="end" (click)="create(new.value)">Create</ion-button>
+          <ion-input #new placeholder="Campaign name" (keyboard.enter)="create()"></ion-input>
+          <ion-button slot="end" (click)="create()">Create</ion-button>
         </ion-item>
       </ion-list>
-    </ion-card> -->
+    </ion-card>
     <app-footer></app-footer>
   </div>
 </ion-content>
