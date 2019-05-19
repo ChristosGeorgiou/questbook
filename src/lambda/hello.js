@@ -3,7 +3,7 @@ exports.handler = function (event, context, callback) {
     callback(null, {
         statusCode: 200,
         body: JSON.stringify({
-            message: `Hello world ${process.env.TEST} ${Math.floor(Math.random() * 10)}`
+            message: `Hello world TEST:"${process.env.TEST}" - ${Math.floor(Math.random() * 10)}`
         })
     });
 };

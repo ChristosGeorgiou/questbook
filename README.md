@@ -1,5 +1,7 @@
 # QuestBook
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/ed2e414d-e324-49b6-9dca-669f165b6689/deploy-status)](https://app.netlify.com/sites/questbook/deploys)
+
 ## General Features
 - session planner (calendar, votes etc)
 - big-screen - show a tv friendly view
