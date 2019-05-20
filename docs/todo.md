@@ -1,0 +1,29 @@
+# TODO
+
+- [] Offline indicator
+- [] Sync indicator
+- [] New campaign
+  - [x] Setup lambda function
+- [] Search campaign
+  - [] Setup lambda function
+- [] Remove campaign from my profile
+- [] Register/login user
+- [] Mange campaign
+  - [] Change details
+  - [] Show stats (filesize etc)
+  - [] permissionscampaigns
+  - [] Delete as owner
+- [] Move campaign items to single view
+- [] More campaign items
+  - [x] Quests
+  - [x] Characters
+  - [] Encounters
+  - [] Scenes
+- [] Add sdr companion
+- [] Add bigscreen mode
+  - [] Youtube music
+  - [] Widgets
+- [] Rightbar
+  - [] Cards type
+  - [] Order
+- [] Import/Export campaign
