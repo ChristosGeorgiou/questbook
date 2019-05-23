@@ -8,15 +8,16 @@
   - [] Setup lambda function
 - [] Remove campaign from my profile
 - [] Register/login user
-- [] Mange campaign
+- [] Manage campaign
   - [] Change details
   - [] Show stats (filesize etc)
-  - [] permissionscampaigns
+  - [] Permissions in campaigns
   - [] Delete as owner
 - [] Move campaign items to single view
 - [] More campaign items
   - [x] Quests
   - [x] Characters
+    - [] Add image cropping [ngx-image-cropper](https://www.npmjs.com/package/ngx-image-cropper)
   - [] Encounters
   - [] Scenes
 - [] Add sdr companion
