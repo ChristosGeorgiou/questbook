@@ -71,7 +71,7 @@
     "pouchdb-adapter-idb": "^7.0.0",
     "pouchdb-debug": "^7.0.0",
     "protractor": "~5.4.0",
-    "rxdb": "^8.1.0",
+    "rxdb": "^8.2.0",
     "rxjs": "^6.5.1",
     "ts-node": "~8.1.0",
     "tslint": "~5.16.0",
