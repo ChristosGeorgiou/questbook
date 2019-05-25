@@ -31,3 +31,7 @@ ion-card {
   border-bottom: solid 3px var(--ion-color-secondary-shade);
   border-right: solid 3px var(--ion-color-secondary-shade);
 }
+
+ion-list {
+  background: var(--ion-color-dark) !important;
+}

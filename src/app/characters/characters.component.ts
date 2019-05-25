@@ -35,6 +35,8 @@ export class CharactersComponent implements OnInit {
           });
         })
       );
+
+    this.create();
   }
 
   async create() {

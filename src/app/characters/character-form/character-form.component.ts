@@ -6,6 +6,7 @@ import { CampaignDocType, CharacterData } from '../../_shared/services/models.al
 @Component({
   selector: 'app-character-form',
   templateUrl: './character-form.component.html',
+  styleUrls: ['character-form.component.scss']
 })
 export class CharacterFormComponent implements OnInit {
   @Input() characterId: string;
@@ -57,17 +58,28 @@ export class CharacterFormComponent implements OnInit {
     this.modalCtrl.dismiss();
   }
 
-  loadFile($event): void {
+  uploadFile($event): void {
     this.file = $event.target.files[0];
     const reader: FileReader = new FileReader();
     reader.onloadend = (e) => {
       const img = new Image();
       const src = reader.result as string;
       img.src = src;
+      // const croped = this.imageToDataUri(img, 250, 250);
+      // console.log(croped);
       this.portrait = src;
       this.newPortrait = true;
     };
     reader.readAsDataURL(this.file);
+  }
+
+  imageToDataUri(img, width, height) {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = width;
+    canvas.height = height;
+    ctx.drawImage(img, 0, 0, width, height);
+    return canvas.toDataURL();
   }
 
   async close() {
