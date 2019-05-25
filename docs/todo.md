@@ -1,0 +1,30 @@
+# TODO
+
+- [ ] Offline indicator
+- [ ] Sync indicator
+- [ ] New campaign
+  - [x] Setup lambda function
+- [ ] Search campaign
+  - [ ] Setup lambda function
+- [ ] Remove campaign from my profile
+- [ ] Register/login user
+- [ ] Manage campaign
+  - [ ] Change details
+  - [ ] Show stats (filesize etc)
+  - [ ] Permissions in campaigns
+  - [ ] Delete as owner
+- [ ] Move campaign items to single view
+- [ ] More campaign items
+  - [x] Quests
+  - [x] Characters
+    - [ ] Add image cropping [ngx-image-cropper](https://www.npmjs.com/package/ngx-image-cropper)
+  - [ ] Encounters
+  - [ ] Scenes
+- [ ] Add sdr companion
+- [ ] Add bigscreen mode
+  - [ ] Youtube music
+  - [ ] Widgets
+- [ ] Rightbar
+  - [ ] Cards type
+  - [ ] Order
+- [ ] Import/Export campaign
