@@ -1,6 +1,6 @@
 {
   "name": "questbook",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "cgeosoft",
   "homepage": "https://cgeosoft.com/",
   "repository": {
@@ -10,14 +10,13 @@
     "start": "run-p start:**",
     "start:app": "ng serve --port 8100",
     "start:lambda": "netlify-lambda serve src/lambda --port 8101 --config webpack.config.js",
-    "build": "run-p build:**",
+    "build": "run-p build:app build:lambda",
+    "build:prod": "run-p build:app:prod build:lambda",
     "build:app": "ng build",
+    "build:app:prod": "ng build --prod",
     "build:lambda": "netlify-lambda build src/lambda",
-    "build-prod": "run-p build-prod:**",
-    "build-prod:app": "ng build --prod",
-    "build-prod:lambda": "netlify-lambda build src/lambda",
     "ng": "ng",
-    "prebuild-prod": "ts-node -O \"{\\\"module\\\": \\\"commonjs\\\"}\" git.version.ts",
+    "prebuild:prod": "ts-node -O \"{\\\"module\\\": \\\"commonjs\\\"}\" git.version.ts",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
