@@ -23,7 +23,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular-devkit/architect": "~0.13.8",
+    "@angular-devkit/architect": "~0.13.9",
     "@angular-devkit/build-angular": "~0.13.0",
     "@angular-devkit/core": "~7.3.8",
     "@angular-devkit/schematics": "~7.3.8",
